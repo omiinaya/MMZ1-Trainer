@@ -10,7 +10,7 @@ function createWindow() {
   const window = new BrowserWindow({
     width: 400,
     height: 300,
-    ...overlayWindow.WINDOW_OPTS,
+    ...overlayWindow.WINDOW_OPTS
   })
 
   window.loadURL(`data:text/html;charset=utf-8,
@@ -37,8 +37,8 @@ app.on('ready', () => {
 })
 
 function listener() {
-  globalShortcut.register('X', () => {
-    console.log('X is pressed')
+  globalShortcut.register('Insert', () => {
+    console.log('Hotkey was pressed')
     toggle()
   })
 }
