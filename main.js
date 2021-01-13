@@ -5,17 +5,20 @@ const { exec } = require('child_process')
 const memoryjs = require('memoryjs')
 
 //target
+//var target = 'notepad.exe'
 var target = 'MZZXLC.exe'
 
 //globals
 var win;
 var visible;
 
+//timers
+var waitingT;
+
 //static
 var processObject;
 var processHandle;
-var processPPiD;
-var processDetails;
+var processPiD;
 var windowTitle;
 
 function createWindow() {
@@ -32,14 +35,8 @@ function createWindow() {
   visible = true;
 }
 
-app.on('ready', () => {
-  listener('Delete')
-  getGameWindow()
-})
-
 function listener(key) {
   globalShortcut.register(key, () => {
-    console.log('Hotkey was pressed.')
     toggle()
   })
 }
@@ -54,24 +51,37 @@ function toggle() {
   }
 }
 
+function main() {
+  getGameWindow()
+  if (processObject) {
+      clearTimeout(waitingT)
+      getWindowTitle()
+  } else {
+      waitingT = setTimeout(main, 1000);
+  }
+}
+
 function getGameWindow() {
   var processes = memoryjs.getProcesses();
   for (var i = 0; i < processes.length; i++) {
     if (processes[i].szExeFile == target) {
       processObject = memoryjs.openProcess(target);
       processHandle = processObject.handle;
-      processPPiD = processObject.th32ProcessID;
-      getWindowTitle()
+      processPiD = processObject.th32ProcessID;
     }
   }
 }
 
 function getWindowTitle() {
-  exec('tasklist /FI "PID eq ' + processPPiD + '" /fo list /v', (err, stdout, stderr) => {
+  exec('tasklist /FI "PID eq ' + processPiD + '" /fo list /v', (err, stdout, stderr) => {
     var index = stdout.search("Window Title: ");
     var title = stdout.substring(index + 14, stdout.length-2)
     windowTitle = title;
-    console.log(windowTitle)
     createWindow()
   });
 }
+
+app.on('ready', () => {
+  main()
+  listener('Delete')
+})
