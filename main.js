@@ -69,7 +69,7 @@ function getGameWindow() {
 function getWindowTitle() {
   exec('tasklist /FI "PID eq ' + processPPiD + '" /fo list /v', (err, stdout, stderr) => {
     var index = stdout.search("Window Title: ");
-    var title = stdout.substring(index + 14, stdout.length)
+    var title = stdout.substring(index + 14, stdout.length-2)
     windowTitle = title;
     console.log(windowTitle)
     createWindow()
