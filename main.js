@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron')
+const { app, BrowserWindow, globalShortcut } = require('electron')
 const { overlayWindow } = require('electron-overlay-window')
 
 function createWindow () {
@@ -29,4 +29,15 @@ app.on('ready', () => {
         createWindow,
         process.platform ==='linux' ? 1000 : 0
     )
+})
+
+app.whenReady().then(() => {
+  // Register a 'CommandOrControl+X' shortcut listener.
+  const ret = globalShortcut.register('X', () => {
+    console.log('X is pressed')
+  })
+
+  if (!ret) {
+    console.log('registration failed')
+  }
 })
