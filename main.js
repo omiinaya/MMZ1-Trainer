@@ -1,11 +1,16 @@
+//dependencies
 const { app, BrowserWindow, globalShortcut } = require('electron')
 const { overlayWindow } = require('electron-overlay-window')
 
-function createWindow () {
+//globals
+var win;
+var visible;
+
+function createWindow() {
   const window = new BrowserWindow({
     width: 400,
     height: 300,
-    ...overlayWindow.WINDOW_OPTS
+    ...overlayWindow.WINDOW_OPTS,
   })
 
   window.loadURL(`data:text/html;charset=utf-8,
@@ -22,22 +27,28 @@ function createWindow () {
 
   window.setIgnoreMouseEvents(true)
   overlayWindow.attachTo(window, 'Untitled - Notepad')
+  win = window;
+  visible = true;
 }
 
 app.on('ready', () => {
-    setTimeout(
-        createWindow,
-        process.platform ==='linux' ? 1000 : 0
-    )
+  createWindow()
+  listener()
 })
 
-app.whenReady().then(() => {
-  // Register a 'CommandOrControl+X' shortcut listener.
-  const ret = globalShortcut.register('X', () => {
+function listener() {
+  globalShortcut.register('X', () => {
     console.log('X is pressed')
+    toggle()
   })
+}
 
-  if (!ret) {
-    console.log('registration failed')
+function toggle() {
+  if (!visible) {
+    win.show()
+    visible = true;
+  } else {
+    win.hide()
+    visible = false;
   }
-})
+}
