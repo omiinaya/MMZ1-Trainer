@@ -3,7 +3,7 @@ const { app, BrowserWindow, globalShortcut } = require('electron')
 const { overlayWindow } = require('electron-overlay-window')
 const { exec } = require('child_process')
 const memoryjs = require('memoryjs')
-//const ioHook = require('iohook')
+const ioHook = require('iohook')
 
 //target
 var target = 'notepad.exe'
