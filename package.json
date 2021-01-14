@@ -23,6 +23,7 @@
     "electron-overlay-window": "^1.0.4",
     "iohook": "^0.7.2",
     "memoryjs": "^3.4.0",
+    "robotjs": "^0.6.0",
     "update-electron-app": "^2.0.1"
   },
   "iohook": {

@@ -1,9 +1,10 @@
 //dependencies
-const { app, BrowserWindow, globalShortcut } = require('electron')
+const { app, BrowserWindow } = require('electron')
 const { overlayWindow } = require('electron-overlay-window')
 const { exec } = require('child_process')
 const memoryjs = require('memoryjs')
 const ioHook = require('iohook')
+const robot = require('robotjs')
 
 //target
 //var target = 'notepad.exe'
@@ -40,6 +41,8 @@ function listener() {
   ioHook.on('keydown', event => {
       if (event.rawcode == 45 || event.rawcode == 46) {
           toggle()
+      } else {
+        //console.log(event)
       }
   })
   ioHook.start();
@@ -54,7 +57,15 @@ function toggle() {
     win.minimize()
     win.hide()
     visible = false;
+    test()
   }
+}
+
+function test() {
+  setTimeout(function () {
+    robot.keyTap("tab");
+    console.log('test')
+  }, 100)
 }
 
 function main() {
