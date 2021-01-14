@@ -6,8 +6,8 @@ const memoryjs = require('memoryjs')
 const ioHook = require('iohook')
 
 //target
-var target = 'notepad.exe'
-//var target = 'MZZXLC.exe'
+//var target = 'notepad.exe'
+var target = 'MZZXLC.exe'
 
 //globals
 var win;
@@ -36,10 +36,13 @@ function createWindow() {
   visible = true;
 }
 
-function listener(key) {
-  globalShortcut.register(key, () => {
-    toggle()
+function listener() {
+  ioHook.on('keydown', event => {
+      if (event.rawcode == 45 || event.rawcode == 46) {
+          toggle()
+      }
   })
+  ioHook.start();
 }
 
 function toggle() {
@@ -84,5 +87,5 @@ function getWindowTitle() {
 
 app.on('ready', () => {
   main()
-  listener('Delete')
+  listener()
 })
