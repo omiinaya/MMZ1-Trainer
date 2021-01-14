@@ -3,10 +3,11 @@ const { app, BrowserWindow, globalShortcut } = require('electron')
 const { overlayWindow } = require('electron-overlay-window')
 const { exec } = require('child_process')
 const memoryjs = require('memoryjs')
+//const ioHook = require('iohook')
 
 //target
-//var target = 'notepad.exe'
-var target = 'MZZXLC.exe'
+var target = 'notepad.exe'
+//var target = 'MZZXLC.exe'
 
 //globals
 var win;
@@ -28,7 +29,7 @@ function createWindow() {
     ...overlayWindow.WINDOW_OPTS
   })
 
-  window.loadFile('index.html')
+  window.loadFile('./assets/HTML/index.html')
   window.setIgnoreMouseEvents(true)
   overlayWindow.attachTo(window, windowTitle)
   win = window;
