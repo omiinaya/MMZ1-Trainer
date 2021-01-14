@@ -30,7 +30,7 @@ function createWindow() {
   })
 
   window.loadFile('./assets/HTML/index.html')
-  window.setIgnoreMouseEvents(true)
+  window.setIgnoreMouseEvents(false)
   overlayWindow.attachTo(window, windowTitle)
   win = window;
   visible = true;
@@ -48,8 +48,10 @@ function listener() {
 function toggle() {
   if (!visible) {
     win.show()
+    win.restore();
     visible = true;
   } else {
+    win.minimize()
     win.hide()
     visible = false;
   }
