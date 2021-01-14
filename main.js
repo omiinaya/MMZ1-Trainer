@@ -32,6 +32,7 @@ function createWindow() {
 
   window.loadFile('./assets/HTML/index.html')
   window.setIgnoreMouseEvents(false)
+  window.setContentProtection(true)
   overlayWindow.attachTo(window, windowTitle)
   win = window;
   visible = true;
@@ -39,11 +40,9 @@ function createWindow() {
 
 function listener() {
   ioHook.on('keydown', event => {
-      if (event.rawcode == 45 || event.rawcode == 46) {
-          toggle()
-      } else {
-        //console.log(event)
-      }
+    if (event.rawcode == 45 || event.rawcode == 46) {
+      toggle()
+    }
   })
   ioHook.start();
 }
@@ -57,24 +56,23 @@ function toggle() {
     win.minimize()
     win.hide()
     visible = false;
-    test()
+    pressTab()
   }
 }
 
-function test() {
+function pressTab() {
   setTimeout(function () {
     robot.keyTap("tab");
-    console.log('test')
   }, 100)
 }
 
 function main() {
   getGameWindow()
   if (processObject) {
-      clearTimeout(waitingT)
-      getWindowTitle()
+    clearTimeout(waitingT)
+    getWindowTitle()
   } else {
-      waitingT = setTimeout(main, 1000);
+    waitingT = setTimeout(main, 1000);
   }
 }
 
@@ -92,7 +90,7 @@ function getGameWindow() {
 function getWindowTitle() {
   exec('tasklist /FI "PID eq ' + processPiD + '" /fo list /v', (err, stdout, stderr) => {
     var index = stdout.search("Window Title: ");
-    var title = stdout.substring(index + 14, stdout.length-2)
+    var title = stdout.substring(index + 14, stdout.length - 2)
     windowTitle = title;
     createWindow()
   });
