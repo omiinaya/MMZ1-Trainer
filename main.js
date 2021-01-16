@@ -36,18 +36,19 @@ function createWindow() {
   overlayWindow.attachTo(window, windowTitle)
   win = window;
   visible = true;
+  hotkeyListener()
 }
 
-function listener() {
+function hotkeyListener() {
   ioHook.on('keydown', event => {
     if (event.rawcode == 45 || event.rawcode == 46) {
-      toggle()
+      windowToggle()
     }
   })
   ioHook.start();
 }
 
-function toggle() {
+function windowToggle() {
   if (!visible) {
     win.show()
     win.restore();
@@ -56,13 +57,13 @@ function toggle() {
     win.minimize()
     win.hide()
     visible = false;
-    pressTab()
+    pressKey("tab")
   }
 }
 
-function pressTab() {
+function pressKey(a) {
   setTimeout(function () {
-    robot.keyTap("tab");
+    robot.keyTap(a);
   }, 100)
 }
 
@@ -98,5 +99,4 @@ function getWindowTitle() {
 
 app.on('ready', () => {
   main()
-  listener()
 })
