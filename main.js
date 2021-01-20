@@ -108,5 +108,8 @@ app.on('ready', () => {
 })
 
 ipc.on('test', function (event, arg) {
-  console.log('test')
+  console.log(arg)
+  if (arg === 'test') {
+    console.log(arg+" has been toggled.")
+  }
 })
