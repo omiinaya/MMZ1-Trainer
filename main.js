@@ -4,11 +4,12 @@ const { overlayWindow } = require('electron-overlay-window')
 const { exec } = require('child_process')
 const memoryjs = require('memoryjs')
 const ioHook = require('iohook')
-const robot = require('robotjs')
+//const robot = require('robotjs')
+const ipc = require('electron').ipcMain
 
 //target
-//var target = 'notepad.exe'
-var target = 'MZZXLC.exe'
+var target = 'notepad.exe'
+//var target = 'MZZXLC.exe'
 
 //globals
 var win;
@@ -27,7 +28,10 @@ function createWindow() {
   const window = new BrowserWindow({
     width: 400,
     height: 300,
-    ...overlayWindow.WINDOW_OPTS
+    ...overlayWindow.WINDOW_OPTS,
+    webPreferences: {
+      nodeIntegration: true
+  }
   })
 
   window.loadFile('./assets/HTML/index.html')
@@ -61,11 +65,13 @@ function windowToggle() {
   }
 }
 
+/*
 function pressKey(a) {
   setTimeout(function () {
     robot.keyTap(a);
   }, 100)
 }
+*/
 
 function main() {
   getGameWindow()
@@ -99,4 +105,8 @@ function getWindowTitle() {
 
 app.on('ready', () => {
   main()
+})
+
+ipc.on('test', function (event, arg) {
+  console.log('test')
 })
