@@ -4,7 +4,6 @@ const { overlayWindow } = require('electron-overlay-window')
 const { exec } = require('child_process')
 const memoryjs = require('memoryjs')
 const ioHook = require('iohook')
-//const robot = require('robotjs')
 const ipc = require('electron').ipcMain
 
 //target
@@ -61,17 +60,8 @@ function windowToggle() {
     win.minimize()
     win.hide()
     visible = false;
-    pressKey("tab")
   }
 }
-
-/*
-function pressKey(a) {
-  setTimeout(function () {
-    robot.keyTap(a);
-  }, 100)
-}
-*/
 
 function main() {
   getGameWindow()
