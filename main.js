@@ -107,7 +107,12 @@ ipc.on('Enable', function (event, arg) {
   if (arg === 'Rank S') {
     RankS(true)
   }
-
+  if (arg === 'Infinite Lives') {
+    InfiniteLives(true)
+  }
+  if (arg === 'Infinite Crystals') {
+    InfiniteCrystals(true)
+  }
 })
 
 ipc.on('Disable', function (event, arg) {
@@ -119,6 +124,12 @@ ipc.on('Disable', function (event, arg) {
   }
   if (arg === 'Rank S') {
     RankS(false)
+  }
+  if (arg === 'Infinite Lives') {
+    InfiniteLives(false)
+  }
+  if (arg === 'Infinite Crystals') {
+    InfiniteCrystals(false)
   }
 })
 
@@ -143,5 +154,21 @@ function RankS(on) {
     console.log("Rank S has been enabled.")
   } else {
     console.log("Rank S has been disabled.")
+  }
+}
+
+function InfiniteLives(on) {
+  if (on) {
+    console.log("Infinite Lives has been enabled.")
+  } else {
+    console.log("Infinite Lives has been disabled.")
+  }
+}
+
+function InfiniteCrystals(on) {
+  if (on) {
+    console.log("Infinite Crystals has been enabled.")
+  } else {
+    console.log("Infinite Crystals has been disabled.")
   }
 }
