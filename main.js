@@ -30,7 +30,7 @@ function createWindow() {
     ...overlayWindow.WINDOW_OPTS,
     webPreferences: {
       nodeIntegration: true
-  }
+    }
   })
 
   window.loadFile('./assets/HTML/index.html')
@@ -97,9 +97,37 @@ app.on('ready', () => {
   main()
 })
 
-ipc.on('test', function (event, arg) {
-  console.log(arg)
-  if (arg === 'test') {
-    console.log(arg+" has been toggled.")
+ipc.on('Enable', function (event, arg) {
+  if (arg === 'Enable/Disable All') {
+    EnableDisableAll(true)
+  }
+  if (arg === 'God Mode') {
+    GodMode(true)
+  }
+
+})
+
+ipc.on('Disable', function (event, arg) {
+  if (arg === 'Enable/Disable All') {
+    EnableDisableAll(false)
+  }
+  if (arg === 'God Mode') {
+    GodMode(false)
   }
 })
+
+function EnableDisableAll(on) {
+  if (on) {
+    console.log("All features have been enabled.")
+  } else {
+    console.log("All features have been disabled.")
+  }
+}
+
+function GodMode(on) {
+  if (on) {
+    console.log("God Mode has been enabled")
+  } else {
+    console.log("God Mode has been disabled")
+  }
+}
