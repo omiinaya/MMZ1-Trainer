@@ -104,6 +104,9 @@ ipc.on('Enable', function (event, arg) {
   if (arg === 'God Mode') {
     GodMode(true)
   }
+  if (arg === 'Rank S') {
+    RankS(true)
+  }
 
 })
 
@@ -113,6 +116,9 @@ ipc.on('Disable', function (event, arg) {
   }
   if (arg === 'God Mode') {
     GodMode(false)
+  }
+  if (arg === 'Rank S') {
+    RankS(false)
   }
 })
 
@@ -126,8 +132,16 @@ function EnableDisableAll(on) {
 
 function GodMode(on) {
   if (on) {
-    console.log("God Mode has been enabled")
+    console.log("God Mode has been enabled.")
   } else {
-    console.log("God Mode has been disabled")
+    console.log("God Mode has been disabled.")
+  }
+}
+
+function RankS(on) {
+  if (on) {
+    console.log("Rank S has been enabled.")
+  } else {
+    console.log("Rank S has been disabled.")
   }
 }

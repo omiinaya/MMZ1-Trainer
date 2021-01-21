@@ -22,14 +22,9 @@ function toggleA(a) {
 function enableAll() {
     if (document.getElementById('Enable/Disable All').checked) {
         document.getElementById('God Mode').checked = true
-    } else {
-        document.getElementById('God Mode').checked = false
-    }
-    
-    if (document.getElementById('Enable/Disable All').checked) {
         document.getElementById('Rank S').checked = true
     } else {
+        document.getElementById('God Mode').checked = false
         document.getElementById('Rank S').checked = false
     }
-
 }
