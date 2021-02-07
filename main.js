@@ -143,43 +143,16 @@ function EnableDisableAll(on) {
 }
 
 function GodMode(on) {
-  //original
-  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 0, 0);
-  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 1, 0);
-  var address3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 2, 0);
-  var address4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 3, 0);
-  var address5 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 0, 0);
-  var address6 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 1, 0);
-  var address7 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 2, 0);
-  //changed
-  var address8 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible3, memoryjs.NORMAL, 0, 0);
-  var address9 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible3, memoryjs.NORMAL, 1, 0);
-  var address10 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible3, memoryjs.NORMAL, 2, 0);
-  var address11 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible3, memoryjs.NORMAL, 3, 0);
-  var address12 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible4, memoryjs.NORMAL, 0, 0);
-  var address13 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible4, memoryjs.NORMAL, 1, 0);
-  var address14 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible4, memoryjs.NORMAL, 2, 0);
+  //default
+  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 1, 0);
+  //modified
+  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 1, 0);
   if (on) {
     console.log("God Mode has been enabled.")
-    //
-    memoryjs.writeMemory(processObject.handle, address1, 0x90, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address2, 0x90, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address3, 0x90, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address4, 0x90, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address5, 0x90, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address6, 0x90, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address7, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address1, 0x01, memoryjs.BYTE);
   } else {
     console.log("God Mode has been disabled.")
-    //
-    memoryjs.writeMemory(processObject.handle, address8, 0x41, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address9, 0x88, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address10, 0x40, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address11, 0x38, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address12, 0x88, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address13, 0x41, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address14, 0x39, memoryjs.BYTE);
-    //
+    memoryjs.writeMemory(processObject.handle, address2, 0x80, memoryjs.BYTE);
   }
 }
 
@@ -205,35 +178,4 @@ function InfiniteCrystals(on) {
   } else {
     console.log("Infinite Crystals has been disabled.")
   }
-}
-
-function sigScan() {
-  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 0, 0); //finds address
-  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 1, 0);
-  var address3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 2, 0);
-  var address4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 3, 0);
-  //
-  var address5 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 0, 0);
-  var address6 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 1, 0);
-  var address7 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 2, 0);
-  //
-  var value1 = memoryjs.readMemory(processObject.handle, address1, memoryjs.BYTE) //reads address
-  var value2 = memoryjs.readMemory(processObject.handle, address2, memoryjs.BYTE)
-  var value3 = memoryjs.readMemory(processObject.handle, address3, memoryjs.BYTE)
-  var value4 = memoryjs.readMemory(processObject.handle, address4, memoryjs.BYTE)
-  var value5 = memoryjs.readMemory(processObject.handle, address5, memoryjs.BYTE)
-  var value6 = memoryjs.readMemory(processObject.handle, address6, memoryjs.BYTE)
-  var value7 = memoryjs.readMemory(processObject.handle, address7, memoryjs.BYTE)
-  //
-  console.log(processObject.handle)
-  console.log(target)
-  console.log(address1.toString(16))
-  console.log(address2.toString(16))
-  console.log(value1.toString(16));
-  console.log(value2.toString(16));
-  console.log(value3.toString(16));
-  console.log(value4.toString(16));
-  console.log(value5.toString(16));
-  console.log(value6.toString(16));
-  console.log(value7.toString(16));
 }

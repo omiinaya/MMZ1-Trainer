@@ -1,8 +1,6 @@
 const signatures = {
-    invincible1: '41 88 40 38 41 80 79 03 00 48 8D 1D 4E 8E 1F 02',
-    invincible2: '88 41 39 C3 CC CC',
-    invincible3: '90 90 90 90 41 80 79 03 00 48 8D 1D 4E 8E 1F 02',
-    invincible4: '90 90 90 C3 CC CC',
+    invincible1: '24 80 FE C9 0A C1 41 88 40 38',
+    invincible2: '24 01 FE C9 0A C1 41 88 40 38'
     
 }
 

@@ -38,7 +38,8 @@ const Addresses = {
     lifeUps: 0x142520BD3,
     elements: 0x142520BD9,
     //misc
-    hover: 0x142520A4C
+    hover: 0x142520A4C,
+    reflect: 0x140371BDA
 }
 
 module.exports = Addresses;
