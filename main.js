@@ -143,6 +143,7 @@ function EnableDisableAll(on) {
 }
 
 function GodMode(on) {
+  //original
   var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 0, 0);
   var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 1, 0);
   var address3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 2, 0);
@@ -150,6 +151,14 @@ function GodMode(on) {
   var address5 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 0, 0);
   var address6 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 1, 0);
   var address7 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 2, 0);
+  //changed
+  var address8 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible3, memoryjs.NORMAL, 0, 0);
+  var address9 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible3, memoryjs.NORMAL, 1, 0);
+  var address10 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible3, memoryjs.NORMAL, 2, 0);
+  var address11 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible3, memoryjs.NORMAL, 3, 0);
+  var address12 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible4, memoryjs.NORMAL, 0, 0);
+  var address13 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible4, memoryjs.NORMAL, 1, 0);
+  var address14 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible4, memoryjs.NORMAL, 2, 0);
   if (on) {
     console.log("God Mode has been enabled.")
     //
@@ -160,12 +169,17 @@ function GodMode(on) {
     memoryjs.writeMemory(processObject.handle, address5, 0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, address6, 0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, address7, 0x90, memoryjs.BYTE);
-    //
-    console.log(defaults)
   } else {
     console.log("God Mode has been disabled.")
     //
-    console.log(defaults)
+    memoryjs.writeMemory(processObject.handle, address8, 0x41, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address9, 0x88, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address10, 0x40, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address11, 0x38, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address12, 0x88, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address13, 0x41, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address14, 0x39, memoryjs.BYTE);
+    //
   }
 }
 
