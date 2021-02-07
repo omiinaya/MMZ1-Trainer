@@ -23,7 +23,7 @@ var waitingT;
 
 //static
 var processObject;
-var addressObject = {};
+var defaults = {};
 
 function createWindow(title) {
   const window = new BrowserWindow({
@@ -143,10 +143,29 @@ function EnableDisableAll(on) {
 }
 
 function GodMode(on) {
+  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 0, 0);
+  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 1, 0);
+  var address3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 2, 0);
+  var address4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 3, 0);
+  var address5 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 0, 0);
+  var address6 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 1, 0);
+  var address7 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 2, 0);
   if (on) {
     console.log("God Mode has been enabled.")
+    //
+    memoryjs.writeMemory(processObject.handle, address1, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address2, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address3, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address4, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address5, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address6, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address7, 0x90, memoryjs.BYTE);
+    //
+    console.log(defaults)
   } else {
     console.log("God Mode has been disabled.")
+    //
+    console.log(defaults)
   }
 }
 
@@ -192,8 +211,6 @@ function sigScan() {
   var value6 = memoryjs.readMemory(processObject.handle, address6, memoryjs.BYTE)
   var value7 = memoryjs.readMemory(processObject.handle, address7, memoryjs.BYTE)
   //
-  addressObject.invincible = address1;
-  console.log(addressObject)
   console.log(processObject.handle)
   console.log(target)
   console.log(address1.toString(16))
