@@ -165,8 +165,13 @@ function RankS(on) {
 }
 
 function InfiniteLives(on) {
+  //default
+  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 1, 0);
+  //modified
+  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 1, 0);
   if (on) {
     console.log("Infinite Lives has been enabled.")
+    
   } else {
     console.log("Infinite Lives has been disabled.")
   }

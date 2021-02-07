@@ -39,7 +39,8 @@ const Addresses = {
     elements: 0x142520BD9,
     //misc
     hover: 0x142520A4C,
-    reflect: 0x140371BDA
+    reflect: 0x140371BDA,
+    decreacelives: 0x14032B592
 }
 
 module.exports = Addresses;
