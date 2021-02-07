@@ -6,9 +6,13 @@ const memoryjs = require('memoryjs')
 const ioHook = require('iohook')
 const ipc = require('electron').ipcMain
 
+//modules
+const signatures = require('./assets/JS/signatures');
+
 //target
-var target = 'notepad.exe'
-//var target = 'MZZXLC.exe'
+//var target = 'Craftopia.exe'
+//var target = 'notepad.exe'
+var target = 'MZZXLC.exe'
 
 //globals
 var win;
@@ -19,11 +23,9 @@ var waitingT;
 
 //static
 var processObject;
-var processHandle;
-var processPiD;
-var windowTitle;
+var addressObject = {};
 
-function createWindow() {
+function createWindow(title) {
   const window = new BrowserWindow({
     width: 400,
     height: 300,
@@ -36,7 +38,7 @@ function createWindow() {
   window.loadFile('./assets/HTML/index.html')
   window.setIgnoreMouseEvents(false)
   window.setContentProtection(true)
-  overlayWindow.attachTo(window, windowTitle)
+  overlayWindow.attachTo(window, title)
   win = window;
   visible = true;
   hotkeyListener()
@@ -78,18 +80,17 @@ function getGameWindow() {
   for (var i = 0; i < processes.length; i++) {
     if (processes[i].szExeFile == target) {
       processObject = memoryjs.openProcess(target);
-      processHandle = processObject.handle;
-      processPiD = processObject.th32ProcessID;
+      console.log(processObject)
     }
   }
 }
 
 function getWindowTitle() {
-  exec('tasklist /FI "PID eq ' + processPiD + '" /fo list /v', (err, stdout, stderr) => {
+  exec('tasklist /FI "PID eq ' + processObject.th32ProcessID + '" /fo list /v', (err, stdout, stderr) => {
     var index = stdout.search("Window Title: ");
     var title = stdout.substring(index + 14, stdout.length - 2)
-    windowTitle = title;
-    createWindow()
+    createWindow(title)
+    sigScan()
   });
 }
 
@@ -171,4 +172,37 @@ function InfiniteCrystals(on) {
   } else {
     console.log("Infinite Crystals has been disabled.")
   }
+}
+
+function sigScan() {
+  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 0, 0); //finds address
+  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 1, 0);
+  var address3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 2, 0);
+  var address4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 3, 0);
+  //
+  var address5 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 0, 0);
+  var address6 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 1, 0);
+  var address7 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 2, 0);
+  //
+  var value1 = memoryjs.readMemory(processObject.handle, address1, memoryjs.BYTE) //reads address
+  var value2 = memoryjs.readMemory(processObject.handle, address2, memoryjs.BYTE)
+  var value3 = memoryjs.readMemory(processObject.handle, address3, memoryjs.BYTE)
+  var value4 = memoryjs.readMemory(processObject.handle, address4, memoryjs.BYTE)
+  var value5 = memoryjs.readMemory(processObject.handle, address5, memoryjs.BYTE)
+  var value6 = memoryjs.readMemory(processObject.handle, address6, memoryjs.BYTE)
+  var value7 = memoryjs.readMemory(processObject.handle, address7, memoryjs.BYTE)
+  //
+  addressObject.invincible = address1;
+  console.log(addressObject)
+  console.log(processObject.handle)
+  console.log(target)
+  console.log(address1.toString(16))
+  console.log(address2.toString(16))
+  console.log(value1.toString(16));
+  console.log(value2.toString(16));
+  console.log(value3.toString(16));
+  console.log(value4.toString(16));
+  console.log(value5.toString(16));
+  console.log(value6.toString(16));
+  console.log(value7.toString(16));
 }
