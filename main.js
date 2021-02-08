@@ -142,15 +142,16 @@ function EnableDisableAll(on) {
 
 function GodMode(on) {
   //default
-  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 1, 0);
-  //modified
-  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 1, 0);
+  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible, memoryjs.NORMAL, 3, 0);
+  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible, memoryjs.NORMAL, 8, 0);
   if (on) {
     console.log("God Mode has been enabled.")
-    memoryjs.writeMemory(processObject.handle, address1, 0x01, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address1, 0x80, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address2, 0x01, memoryjs.BYTE);
   } else {
     console.log("God Mode has been disabled.")
-    memoryjs.writeMemory(processObject.handle, address2, 0x80, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address1, 0x5A, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address2, 0x02, memoryjs.BYTE);
   }
 }
 

@@ -43,4 +43,7 @@ const Addresses = {
     decreacelives: 0x14032B592
 }
 
+//140371D31 - address of flinch on player hit
+//140371D3C - address of flicn on boss hit
+
 module.exports = Addresses;
