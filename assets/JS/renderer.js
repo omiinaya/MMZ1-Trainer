@@ -21,11 +21,13 @@ function toggleA(a) {
 function toggleAll() {
     if (document.getElementById('Enable/Disable All').checked) {
         document.getElementById('God Mode').checked = true
+        document.getElementById('One-Hit Kill').checked = true
         document.getElementById('Rank S').checked = true
         document.getElementById('Infinite Lives').checked = true
         document.getElementById('Infinite Crystals').checked = true
     } else {
         document.getElementById('God Mode').checked = false
+        document.getElementById('One-Hit Kill').checked = true
         document.getElementById('Rank S').checked = false
         document.getElementById('Infinite Lives').checked = false
         document.getElementById('Infinite Crystals').checked = false

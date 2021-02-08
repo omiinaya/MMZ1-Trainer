@@ -103,6 +103,9 @@ ipc.on('Enable', function (event, arg) {
   if (arg === 'God Mode') {
     GodMode(true)
   }
+  if (arg === 'One-Hit Kill') {
+    OneHitKill(true)
+  }
   if (arg === 'Rank S') {
     RankS(true)
   }
@@ -120,6 +123,9 @@ ipc.on('Disable', function (event, arg) {
   }
   if (arg === 'God Mode') {
     GodMode(false)
+  }
+  if (arg === 'One-Hit Kill') {
+    OneHitKill(false)
   }
   if (arg === 'Rank S') {
     RankS(false)
@@ -142,16 +148,56 @@ function EnableDisableAll(on) {
 
 function GodMode(on) {
   //default
-  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible, memoryjs.NORMAL, 3, 0);
-  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible, memoryjs.NORMAL, 8, 0);
+  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 3, 0);
+  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 8, 0);
+  //
+  var address3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 0, 0);
+  var address4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 1, 0);
+  var address5 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 2, 0);
+  var address6 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 3, 0);
   if (on) {
     console.log("God Mode has been enabled.")
     memoryjs.writeMemory(processObject.handle, address1, 0x80, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, address2, 0x01, memoryjs.BYTE);
+    //
+    memoryjs.writeMemory(processObject.handle, address3, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address4, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address5, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address6, 0x90, memoryjs.BYTE);
   } else {
     console.log("God Mode has been disabled.")
     memoryjs.writeMemory(processObject.handle, address1, 0x5A, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, address2, 0x02, memoryjs.BYTE);
+    //
+    memoryjs.writeMemory(processObject.handle, address3, 0x41, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address4, 0x88, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address5, 0x40, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address6, 0x38, memoryjs.BYTE);
+  }
+}
+
+function OneHitKill(on) {
+  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill1, memoryjs.NORMAL, 5, 0);
+  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill1, memoryjs.NORMAL, 6, 0);
+  var address3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill1, memoryjs.NORMAL, 7, 0);
+  var address4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill1, memoryjs.NORMAL, 8, 0);
+  //
+  var address5 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill2, memoryjs.NORMAL, 5, 0);
+  var address6 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill2, memoryjs.NORMAL, 6, 0);
+  var address7 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill2, memoryjs.NORMAL, 7, 0);
+  var address8 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill2, memoryjs.NORMAL, 8, 0);
+  if (on) {
+    console.log("One-Hit Kill has been enabled.")
+    memoryjs.writeMemory(processObject.handle, address1, 0x83, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address2, 0x6B, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address3, 0x30, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address4, 0x50, memoryjs.BYTE);
+  } else {
+    console.log("One-Hit Kill has been disabled.")
+    memoryjs.writeMemory(processObject.handle, address5, 0x66, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address6, 0x29, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address7, 0x43, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address8, 0x30, memoryjs.BYTE);
   }
 }
 
@@ -165,19 +211,16 @@ function RankS(on) {
 
 function InfiniteLives(on) {
   //default
-  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.infinitelives1, memoryjs.NORMAL, 0, 0);
-  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.infinitelives1, memoryjs.NORMAL, 1, 0);
-  //modified
-  var address3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.infinitelives2, memoryjs.NORMAL, 0, 0);
-  var address4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.infinitelives2, memoryjs.NORMAL, 1, 0);
+  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.infinitelives, memoryjs.NORMAL, 0, 0)
+  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.infinitelives, memoryjs.NORMAL, 1, 0)
   if (on) {
     console.log("Infinite Lives has been enabled.")
     memoryjs.writeMemory(processObject.handle, address1, 0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, address2, 0x90, memoryjs.BYTE);
   } else {
     console.log("Infinite Lives has been disabled.")
-    memoryjs.writeMemory(processObject.handle, address3, 0xFE, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address4, 0x08, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address1, 0xFE, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address2, 0x08, memoryjs.BYTE);
   }
 }
 
