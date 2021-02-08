@@ -80,7 +80,6 @@ function getGameWindow() {
   for (var i = 0; i < processes.length; i++) {
     if (processes[i].szExeFile == target) {
       processObject = memoryjs.openProcess(target);
-      console.log(processObject)
     }
   }
 }
@@ -90,7 +89,6 @@ function getWindowTitle() {
     var index = stdout.search("Window Title: ");
     var title = stdout.substring(index + 14, stdout.length - 2)
     createWindow(title)
-    sigScan()
   });
 }
 
@@ -166,14 +164,19 @@ function RankS(on) {
 
 function InfiniteLives(on) {
   //default
-  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 1, 0);
+  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.infinitelives1, memoryjs.NORMAL, 0, 0);
+  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.infinitelives1, memoryjs.NORMAL, 1, 0);
   //modified
-  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 1, 0);
+  var address3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.infinitelives2, memoryjs.NORMAL, 0, 0);
+  var address4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.infinitelives2, memoryjs.NORMAL, 1, 0);
   if (on) {
     console.log("Infinite Lives has been enabled.")
-    
+    memoryjs.writeMemory(processObject.handle, address1, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address2, 0x90, memoryjs.BYTE);
   } else {
     console.log("Infinite Lives has been disabled.")
+    memoryjs.writeMemory(processObject.handle, address3, 0xFE, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address4, 0x08, memoryjs.BYTE);
   }
 }
 
