@@ -154,19 +154,15 @@ function GodMode(on) {
   var ptrStr = '0x' + bytes['4'] + bytes['3'] + bytes['2'] + bytes['1']
   var ptrHex = parseInt(ptrStr)
   var next = address + 8;
-  var target = next + ptrHex;
-  function heal() {
-    if (on) {
-      var health = memoryjs.readMemory(processObject.handle, target, memoryjs.BYTE)
-      if (health < 32) {
-        memoryjs.writeMemory(processObject.handle, target, 0x20, memoryjs.BYTE);
-      }
-      godModeT = setTimeout(test123, 100);
-    } else {
-      clearTimeout(godModeT)
-    }
+  var health = next + ptrHex;
+  var target = health+8
+  if (on) {
+    console.log('God Mode has been enabled.')
+    memoryjs.writeMemory(processObject.handle, target, 0x80, memoryjs.BYTE);
+  } else {
+    console.log('God Mode has been disabled.')
+    memoryjs.writeMemory(processObject.handle, target, 0x0, memoryjs.BYTE);
   }
-  heal()
 }
 
 function RankS(on) {
@@ -241,6 +237,31 @@ function testing() {
   var ptrStr = '0x' + bytes.byte4 + bytes.byte3 + bytes.byte2 + bytes.byte1
   var ptrHex = parseInt(ptrStr)
   var next = address + 8;
+  var health = next + ptrHex;
+  var target = health + 8
+  console.log(target.toString(16))
+}
+
+function testing2() {
+  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible, memoryjs.NORMAL, 0, 0)
+  var next = address + 1;
+  var offset = memoryjs.readMemory(processObject.handle, address + 3, memoryjs.BYTE)
+  var target = next + offset;
+  /*
+  var bytes = {
+    byte1: memoryjs.readMemory(processObject.handle, address + 3, memoryjs.BYTE).toString(16),
+    byte2: memoryjs.readMemory(processObject.handle, address + 4, memoryjs.BYTE).toString(16),
+    byte3: memoryjs.readMemory(processObject.handle, address + 5, memoryjs.BYTE).toString(16),
+    byte4: memoryjs.readMemory(processObject.handle, address + 6, memoryjs.BYTE).toString(16),
+  }
+  var ptrStr = '0x' + bytes.byte4 + bytes.byte3 + bytes.byte2 + bytes.byte1
+  var ptrHex = parseInt(ptrStr)
+  var next = address + 8;
   var target = next + ptrHex;
+  console.log(target.toString(16))
+  */
+  console.log(address.toString(16))
+  console.log(next.toString(16))
+  console.log(offset.toString(16))
   console.log(target.toString(16))
 }
