@@ -191,7 +191,7 @@ function OneHitKill(on) {
     memoryjs.writeMemory(processObject.handle, address1, 0x83, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, address2, 0x6B, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, address3, 0x30, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address4, 0x50, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, address4, 0x5A, memoryjs.BYTE);
   } else {
     console.log("One-Hit Kill has been disabled.")
     memoryjs.writeMemory(processObject.handle, address5, 0x66, memoryjs.BYTE);
@@ -225,9 +225,17 @@ function InfiniteLives(on) {
 }
 
 function InfiniteCrystals(on) {
+  const address = memoryjs.virtualAllocEx(
+    processObject.handle,
+    null,
+    0x60,
+    memoryjs.MEM_RESERVE | memoryjs.MEM_COMMIT,
+    memoryjs.PAGE_EXECUTE_READWRITE,
+  );
   if (on) {
-    console.log("Infinite Crystals has been enabled.")
+    console.log(`Allocated address: 0x${address.toString(16).toUpperCase()}`);
+    memoryjs.writeMemory(processObject.handle, address, 0x08, memoryjs.BYTE);
   } else {
-    console.log("Infinite Crystals has been disabled.")
+    //
   }
 }
