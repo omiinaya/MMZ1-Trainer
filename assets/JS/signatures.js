@@ -1,4 +1,5 @@
 const signatures = {
+    health: '66 83 3D 42 48 1F 02 00 75 0D E8 13 84 F6 00',
     invincible1: 'C6 43 38 ? EB 1D 80 F9 ?',
     invincible2: '? ? ? ? 41 80 79 03 00 48 8D 1D 4E 8E 1F 02',
     onehitkill1: 'E8 96 F8 FF FF 66 29 43 30',

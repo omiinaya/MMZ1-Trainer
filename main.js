@@ -252,11 +252,11 @@ function InfiniteCrystals(on) {
 
 function NoPushBack() {
   var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.nopushback, memoryjs.NORMAL, 47, 0)
-  var address2 = address1+1; 
-  var address3 = address1+2; 
-  var address4 = address1+3; 
-  var address5 = address1+4; 
-  var address6 = address1+5;
+  var address2 = address1 + 1;
+  var address3 = address1 + 2;
+  var address4 = address1 + 3;
+  var address5 = address1 + 4;
+  var address6 = address1 + 5;
   memoryjs.writeMemory(processObject.handle, address1, 0x90, memoryjs.BYTE);
   memoryjs.writeMemory(processObject.handle, address2, 0x90, memoryjs.BYTE);
   memoryjs.writeMemory(processObject.handle, address3, 0x90, memoryjs.BYTE);
@@ -266,12 +266,17 @@ function NoPushBack() {
 }
 
 function testing() {
-  var base =    0x140000000;                                                                                        //client.exe
-  var pattern = '66 83 3D 42 48 1F 02 00 75 0D E8 13 84 F6 00'                                                      //signature
-  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, pattern, memoryjs.NORMAL, 0, 0) //14032C24E                                                                                         //pointer bytes
-  var pointer = 0x021F4842;                                                                                         //next instruction
-  var next =    address+8;                                                                                          //next instruction
-  var target =  next+pointer;
-  console.log(next.toString(16))
+  var pattern = signatures.health;                                                      
+  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, pattern, memoryjs.NORMAL, 0, 0)
+  var bytes = {
+    byte1: memoryjs.readMemory(processObject.handle, address+3, memoryjs.BYTE).toString(16),
+    byte2: memoryjs.readMemory(processObject.handle, address+4, memoryjs.BYTE).toString(16),
+    byte3: memoryjs.readMemory(processObject.handle, address+5, memoryjs.BYTE).toString(16),
+    byte4: memoryjs.readMemory(processObject.handle, address+6, memoryjs.BYTE).toString(16),
+  }                                                                                     
+  var ptrStr = '0x'+bytes.byte4+bytes.byte3+bytes.byte2+bytes.byte1    
+  var ptrHex = parseInt(ptrStr)                                                                             
+  var next = address + 8;                                                                                          
+  var target = next + ptrHex;                                                                                       
   console.log(target.toString(16))
 }
