@@ -226,42 +226,29 @@ function NoPushBack() {
 }
 
 function testing() {
-  var pattern = signatures.health;
-  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, pattern, memoryjs.NORMAL, 0, 0)
+  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank, memoryjs.NORMAL, 0, 0)
+  var next = address + 7;
   var bytes = {
-    byte1: memoryjs.readMemory(processObject.handle, address + 3, memoryjs.BYTE).toString(16),
-    byte2: memoryjs.readMemory(processObject.handle, address + 4, memoryjs.BYTE).toString(16),
-    byte3: memoryjs.readMemory(processObject.handle, address + 5, memoryjs.BYTE).toString(16),
-    byte4: memoryjs.readMemory(processObject.handle, address + 6, memoryjs.BYTE).toString(16),
+    1: memoryjs.readMemory(processObject.handle, address + 3, memoryjs.BYTE).toString(16),
+    2: memoryjs.readMemory(processObject.handle, address + 4, memoryjs.BYTE).toString(16),
+    3: memoryjs.readMemory(processObject.handle, address + 5, memoryjs.BYTE).toString(16),
+    4: memoryjs.readMemory(processObject.handle, address + 6, memoryjs.BYTE).toString(16),
   }
-  var ptrStr = '0x' + bytes.byte4 + bytes.byte3 + bytes.byte2 + bytes.byte1
-  var ptrHex = parseInt(ptrStr)
-  var next = address + 8;
-  var health = next + ptrHex;
-  var target = health + 8
-  console.log(target.toString(16))
-}
-
-function testing2() {
-  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible, memoryjs.NORMAL, 0, 0)
-  var next = address + 1;
-  var offset = memoryjs.readMemory(processObject.handle, address + 3, memoryjs.BYTE)
-  var target = next + offset;
-  /*
-  var bytes = {
-    byte1: memoryjs.readMemory(processObject.handle, address + 3, memoryjs.BYTE).toString(16),
-    byte2: memoryjs.readMemory(processObject.handle, address + 4, memoryjs.BYTE).toString(16),
-    byte3: memoryjs.readMemory(processObject.handle, address + 5, memoryjs.BYTE).toString(16),
-    byte4: memoryjs.readMemory(processObject.handle, address + 6, memoryjs.BYTE).toString(16),
-  }
-  var ptrStr = '0x' + bytes.byte4 + bytes.byte3 + bytes.byte2 + bytes.byte1
-  var ptrHex = parseInt(ptrStr)
-  var next = address + 8;
-  var target = next + ptrHex;
-  console.log(target.toString(16))
-  */
+  var offsetStr = '0x' + bytes['4'] + bytes['3'] + bytes['2'] + bytes['1']
+  var offsetHex = parseInt(offsetStr)
+  var pointer = next + offsetHex
+  var dword = memoryjs.readMemory(processObject.handle, pointer, memoryjs.DWORD).toString(16)
+  var offsetStr2 = '0x' + dword.substring(1, dword.length)
+  var offsetHex2 = parseInt(offsetStr2)
+  var base = processObject.modBaseAddr
+  var func = base+offsetHex2;
+  var target = func+1;
+  var rank = memoryjs.readMemory(processObject.handle, target, memoryjs.BYTE)
+  
   console.log(address.toString(16))
   console.log(next.toString(16))
-  console.log(offset.toString(16))
+  console.log(pointer.toString(16))
+  console.log(base.toString(16))
   console.log(target.toString(16))
+  console.log(rank)
 }
