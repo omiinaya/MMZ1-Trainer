@@ -4,6 +4,7 @@ const signatures = {
     onehitkill1: 'E8 96 F8 FF FF 66 29 43 30',
     onehitkill2: 'E8 96 F8 FF FF 83 6B 30 5A',
     infinitelives: '? ? BA 00 02 00 00 48 8B CB E8 AF 22 01 00',
+    nopushback: '41 83 E1 01 E8 27 2C 00 00 48 8B 5C 24 40', 
     test: '66 83 3D 42 48 1F 02 00'
 }
 

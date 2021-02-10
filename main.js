@@ -201,9 +201,17 @@ function OneHitKill(on) {
   }
 }
 
+
+//140371CEA
 function RankS(on) {
+  NoPushBack()
+  var address = 0x14032C251;
+  const pointer = memoryjs.readMemory(processObject.handle, address, 'dword');
   if (on) {
     console.log("Rank S has been enabled.")
+    console.log(pointer)
+    const ptr = memoryjs.readMemory(processObject.handle, pointer, 'dword');
+    console.log(ptr)
   } else {
     console.log("Rank S has been disabled.")
   }
@@ -238,4 +246,19 @@ function InfiniteCrystals(on) {
   } else {
     //
   }
+}
+
+function NoPushBack() {
+  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.nopushback, memoryjs.NORMAL, 47, 0)
+  var address2 = address1+1; 
+  var address3 = address1+2; 
+  var address4 = address1+3; 
+  var address5 = address1+4; 
+  var address6 = address1+5;
+  memoryjs.writeMemory(processObject.handle, address1, 0x90, memoryjs.BYTE);
+  memoryjs.writeMemory(processObject.handle, address2, 0x90, memoryjs.BYTE);
+  memoryjs.writeMemory(processObject.handle, address3, 0x90, memoryjs.BYTE);
+  memoryjs.writeMemory(processObject.handle, address4, 0x90, memoryjs.BYTE);
+  memoryjs.writeMemory(processObject.handle, address5, 0x90, memoryjs.BYTE);
+  memoryjs.writeMemory(processObject.handle, address6, 0x90, memoryjs.BYTE);
 }
