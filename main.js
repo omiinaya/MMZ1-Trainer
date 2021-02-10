@@ -89,6 +89,8 @@ function getWindowTitle() {
     var index = stdout.search("Window Title: ");
     var title = stdout.substring(index + 14, stdout.length - 2)
     createWindow(title)
+    //console.log(processObject)
+    testing()
   });
 }
 
@@ -261,4 +263,15 @@ function NoPushBack() {
   memoryjs.writeMemory(processObject.handle, address4, 0x90, memoryjs.BYTE);
   memoryjs.writeMemory(processObject.handle, address5, 0x90, memoryjs.BYTE);
   memoryjs.writeMemory(processObject.handle, address6, 0x90, memoryjs.BYTE);
+}
+
+function testing() {
+  var base =    0x140000000;                                                                                        //client.exe
+  var pattern = '66 83 3D 42 48 1F 02 00 75 0D E8 13 84 F6 00'                                                      //signature
+  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, pattern, memoryjs.NORMAL, 0, 0) //14032C24E                                                                                         //pointer bytes
+  var pointer = 0x021F4842;                                                                                         //next instruction
+  var next =    address+8;                                                                                          //next instruction
+  var target =  next+pointer;
+  console.log(next.toString(16))
+  console.log(target.toString(16))
 }
