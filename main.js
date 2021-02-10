@@ -20,6 +20,7 @@ var visible;
 
 //timers
 var waitingT;
+var godModeT;
 
 //static
 var processObject;
@@ -105,9 +106,6 @@ ipc.on('Enable', function (event, arg) {
   if (arg === 'God Mode') {
     GodMode(true)
   }
-  if (arg === 'One-Hit Kill') {
-    OneHitKill(true)
-  }
   if (arg === 'Rank S') {
     RankS(true)
   }
@@ -125,9 +123,6 @@ ipc.on('Disable', function (event, arg) {
   }
   if (arg === 'God Mode') {
     GodMode(false)
-  }
-  if (arg === 'One-Hit Kill') {
-    OneHitKill(false)
   }
   if (arg === 'Rank S') {
     RankS(false)
@@ -149,62 +144,31 @@ function EnableDisableAll(on) {
 }
 
 function GodMode(on) {
-  //default
-  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 3, 0);
-  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible1, memoryjs.NORMAL, 8, 0);
-  //
-  var address3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 0, 0);
-  var address4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 1, 0);
-  var address5 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 2, 0);
-  var address6 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.invincible2, memoryjs.NORMAL, 3, 0);
-  if (on) {
-    console.log("God Mode has been enabled.")
-    memoryjs.writeMemory(processObject.handle, address1, 0x80, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address2, 0x01, memoryjs.BYTE);
-    //
-    memoryjs.writeMemory(processObject.handle, address3, 0x90, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address4, 0x90, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address5, 0x90, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address6, 0x90, memoryjs.BYTE);
-  } else {
-    console.log("God Mode has been disabled.")
-    memoryjs.writeMemory(processObject.handle, address1, 0x5A, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address2, 0x02, memoryjs.BYTE);
-    //
-    memoryjs.writeMemory(processObject.handle, address3, 0x41, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address4, 0x88, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address5, 0x40, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address6, 0x38, memoryjs.BYTE);
+  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.health, memoryjs.NORMAL, 0, 0)
+  var bytes = {
+    1: memoryjs.readMemory(processObject.handle, address + 3, memoryjs.BYTE).toString(16),
+    2: memoryjs.readMemory(processObject.handle, address + 4, memoryjs.BYTE).toString(16),
+    3: memoryjs.readMemory(processObject.handle, address + 5, memoryjs.BYTE).toString(16),
+    4: memoryjs.readMemory(processObject.handle, address + 6, memoryjs.BYTE).toString(16),
   }
+  var ptrStr = '0x' + bytes['4'] + bytes['3'] + bytes['2'] + bytes['1']
+  var ptrHex = parseInt(ptrStr)
+  var next = address + 8;
+  var target = next + ptrHex;
+  function heal() {
+    if (on) {
+      var health = memoryjs.readMemory(processObject.handle, target, memoryjs.BYTE)
+      if (health < 32) {
+        memoryjs.writeMemory(processObject.handle, target, 0x20, memoryjs.BYTE);
+      }
+      godModeT = setTimeout(test123, 100);
+    } else {
+      clearTimeout(godModeT)
+    }
+  }
+  heal()
 }
 
-function OneHitKill(on) {
-  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill1, memoryjs.NORMAL, 5, 0);
-  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill1, memoryjs.NORMAL, 6, 0);
-  var address3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill1, memoryjs.NORMAL, 7, 0);
-  var address4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill1, memoryjs.NORMAL, 8, 0);
-  //
-  var address5 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill2, memoryjs.NORMAL, 5, 0);
-  var address6 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill2, memoryjs.NORMAL, 6, 0);
-  var address7 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill2, memoryjs.NORMAL, 7, 0);
-  var address8 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.onehitkill2, memoryjs.NORMAL, 8, 0);
-  if (on) {
-    console.log("One-Hit Kill has been enabled.")
-    memoryjs.writeMemory(processObject.handle, address1, 0x83, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address2, 0x6B, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address3, 0x30, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address4, 0x5A, memoryjs.BYTE);
-  } else {
-    console.log("One-Hit Kill has been disabled.")
-    memoryjs.writeMemory(processObject.handle, address5, 0x66, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address6, 0x29, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address7, 0x43, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address8, 0x30, memoryjs.BYTE);
-  }
-}
-
-
-//140371CEA
 function RankS(on) {
   NoPushBack()
   var address = 0x14032C251;
@@ -266,17 +230,17 @@ function NoPushBack() {
 }
 
 function testing() {
-  var pattern = signatures.health;                                                      
+  var pattern = signatures.health;
   var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, pattern, memoryjs.NORMAL, 0, 0)
   var bytes = {
-    byte1: memoryjs.readMemory(processObject.handle, address+3, memoryjs.BYTE).toString(16),
-    byte2: memoryjs.readMemory(processObject.handle, address+4, memoryjs.BYTE).toString(16),
-    byte3: memoryjs.readMemory(processObject.handle, address+5, memoryjs.BYTE).toString(16),
-    byte4: memoryjs.readMemory(processObject.handle, address+6, memoryjs.BYTE).toString(16),
-  }                                                                                     
-  var ptrStr = '0x'+bytes.byte4+bytes.byte3+bytes.byte2+bytes.byte1    
-  var ptrHex = parseInt(ptrStr)                                                                             
-  var next = address + 8;                                                                                          
-  var target = next + ptrHex;                                                                                       
+    byte1: memoryjs.readMemory(processObject.handle, address + 3, memoryjs.BYTE).toString(16),
+    byte2: memoryjs.readMemory(processObject.handle, address + 4, memoryjs.BYTE).toString(16),
+    byte3: memoryjs.readMemory(processObject.handle, address + 5, memoryjs.BYTE).toString(16),
+    byte4: memoryjs.readMemory(processObject.handle, address + 6, memoryjs.BYTE).toString(16),
+  }
+  var ptrStr = '0x' + bytes.byte4 + bytes.byte3 + bytes.byte2 + bytes.byte1
+  var ptrHex = parseInt(ptrStr)
+  var next = address + 8;
+  var target = next + ptrHex;
   console.log(target.toString(16))
 }
