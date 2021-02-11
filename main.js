@@ -132,10 +132,10 @@ function GodMode(on) {
   var target = init(processObject).invincible;
   if (on) {
     console.log('God Mode has been enabled.')
-    memoryjs.writeMemory(processObject.handle, target, 0x80, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target,      0x80, memoryjs.BYTE);
   } else {
     console.log('God Mode has been disabled.')
-    memoryjs.writeMemory(processObject.handle, target, 0x0, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target,      0x00, memoryjs.BYTE);
   }
 }
 
@@ -143,20 +143,25 @@ function RankS(on) {
   var target = init(processObject).ranks1;
   var target2 = init(processObject).ranks2;
   var target3 = init(processObject).ranks3;
+  var target4 = init(processObject).ranks4;
   if (on) {
     console.log("Rank S has been enabled.")
-    memoryjs.writeMemory(processObject.handle, target, 0x06, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, target2, 0x06, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, target3, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target,      0x06, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target2,     0x06, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3,     0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target3 + 1, 0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target3 + 2, 0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target3 + 3, 0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target3 + 4, 0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target3 + 5, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target4,     0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target4 + 1, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target4 + 2, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target4 + 3, 0x90, memoryjs.BYTE);
   } else {
     console.log("Rank S has been disabled.")
-    memoryjs.writeMemory(processObject.handle, target, 0x03, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, target2, 0x03, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target,      0x03, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target2,     0x03, memoryjs.BYTE);
   }
 }
 

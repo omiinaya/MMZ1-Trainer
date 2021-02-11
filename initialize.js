@@ -52,12 +52,17 @@ function init(processObject) {
     var address4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank3, memoryjs.NORMAL, 0, 0)
     var ranks3 = address4-6;
 
+    //RANK S - 4
+    var address5 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank4, memoryjs.NORMAL, 0, 0)
+    var ranks4 = address5+14
+
     var addresses = {
         'health': health,
         'invincible': invincible,
         'ranks1': ranks1,
         'ranks2': ranks2,
         'ranks3': ranks3,
+        'ranks4': ranks4,
     }
     return addresses
 }
