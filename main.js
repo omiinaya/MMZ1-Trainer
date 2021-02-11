@@ -8,6 +8,7 @@ const ipc = require('electron').ipcMain
 
 //modules
 const signatures = require('./assets/JS/signatures');
+const init = require('./initialize.js');
 
 //target
 //var target = 'Craftopia.exe'
@@ -90,8 +91,6 @@ function getWindowTitle() {
     var index = stdout.search("Window Title: ");
     var title = stdout.substring(index + 14, stdout.length - 2)
     createWindow(title)
-    //console.log(processObject)
-    testing()
   });
 }
 
@@ -100,9 +99,6 @@ app.on('ready', () => {
 })
 
 ipc.on('Enable', function (event, arg) {
-  if (arg === 'Enable/Disable All') {
-    EnableDisableAll(true)
-  }
   if (arg === 'God Mode') {
     GodMode(true)
   }
@@ -118,9 +114,6 @@ ipc.on('Enable', function (event, arg) {
 })
 
 ipc.on('Disable', function (event, arg) {
-  if (arg === 'Enable/Disable All') {
-    EnableDisableAll(false)
-  }
   if (arg === 'God Mode') {
     GodMode(false)
   }
@@ -135,30 +128,10 @@ ipc.on('Disable', function (event, arg) {
   }
 })
 
-function EnableDisableAll(on) {
-  if (on) {
-    console.log("All features have been enabled.")
-  } else {
-    console.log("All features have been disabled.")
-  }
-}
-
 function GodMode(on) {
-  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.health, memoryjs.NORMAL, 0, 0)
-  var bytes = {
-    1: memoryjs.readMemory(processObject.handle, address + 3, memoryjs.BYTE).toString(16),
-    2: memoryjs.readMemory(processObject.handle, address + 4, memoryjs.BYTE).toString(16),
-    3: memoryjs.readMemory(processObject.handle, address + 5, memoryjs.BYTE).toString(16),
-    4: memoryjs.readMemory(processObject.handle, address + 6, memoryjs.BYTE).toString(16),
-  }
-  var ptrStr = '0x' + bytes['4'] + bytes['3'] + bytes['2'] + bytes['1']
-  var ptrHex = parseInt(ptrStr)
-  var next = address + 8;
-  var health = next + ptrHex;
-  var target = health+8
+  var target = init(processObject).invincible;
   if (on) {
     console.log('God Mode has been enabled.')
-    console.log(target.toString(16))
     memoryjs.writeMemory(processObject.handle, target, 0x80, memoryjs.BYTE);
   } else {
     console.log('God Mode has been disabled.')
@@ -167,42 +140,23 @@ function GodMode(on) {
 }
 
 function RankS(on) {
-  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank1, memoryjs.NORMAL, 0, 0)
-  var next = address + 7;
-  var bytes = {
-    1: memoryjs.readMemory(processObject.handle, address + 3, memoryjs.BYTE).toString(16),
-    2: memoryjs.readMemory(processObject.handle, address + 4, memoryjs.BYTE).toString(16),
-    3: memoryjs.readMemory(processObject.handle, address + 5, memoryjs.BYTE).toString(16),
-    4: memoryjs.readMemory(processObject.handle, address + 6, memoryjs.BYTE).toString(16),
-  }
-  var offsetStr = '0x' + bytes['4'] + bytes['3'] + bytes['2'] + bytes['1']
-  var offsetHex = parseInt(offsetStr)
-  var pointer = next + offsetHex
-  var dword = memoryjs.readMemory(processObject.handle, pointer, memoryjs.DWORD).toString(16)
-  var offsetStr2 = '0x' + dword.substring(1, dword.length)
-  var offsetHex2 = parseInt(offsetStr2)
-  var base = processObject.modBaseAddr
-  var func = base+offsetHex2;
-  var target = func+1;
-  //
-  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank2, memoryjs.NORMAL, 0, 0)
-  var bytes2 = {
-    1: memoryjs.readMemory(processObject.handle, address2 + 2, memoryjs.BYTE).toString(16),
-    2: memoryjs.readMemory(processObject.handle, address2 + 3, memoryjs.BYTE).toString(16),
-    3: memoryjs.readMemory(processObject.handle, address2 + 4, memoryjs.BYTE).toString(16),
-    4: memoryjs.readMemory(processObject.handle, address2 + 5, memoryjs.BYTE).toString(16),
-  }
-  var offset2Str = '0x' + bytes2['4'] + bytes2['3'] + bytes2['2'] + bytes2['1']
-  var offset2Hex = parseInt(offset2Str)
-  //add this offset to entity list address aka A0 aka god mode address
+  var target = init(processObject).ranks1;
+  var target2 = init(processObject).ranks2;
+  var target3 = init(processObject).ranks3;
   if (on) {
     console.log("Rank S has been enabled.")
     memoryjs.writeMemory(processObject.handle, target, 0x06, memoryjs.BYTE);
-    console.log(address2.toString(16))
-    console.log(offset2Hex.toString(16))
+    memoryjs.writeMemory(processObject.handle, target2, 0x06, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3 + 1, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3 + 2, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3 + 3, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3 + 4, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3 + 5, 0x90, memoryjs.BYTE);
   } else {
     console.log("Rank S has been disabled.")
     memoryjs.writeMemory(processObject.handle, target, 0x03, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target2, 0x03, memoryjs.BYTE);
   }
 }
 
@@ -222,16 +176,8 @@ function InfiniteLives(on) {
 }
 
 function InfiniteCrystals(on) {
-  const address = memoryjs.virtualAllocEx(
-    processObject.handle,
-    null,
-    0x60,
-    memoryjs.MEM_RESERVE | memoryjs.MEM_COMMIT,
-    memoryjs.PAGE_EXECUTE_READWRITE,
-  );
   if (on) {
-    console.log(`Allocated address: 0x${address.toString(16).toUpperCase()}`);
-    memoryjs.writeMemory(processObject.handle, address, 0x08, memoryjs.BYTE);
+    //
   } else {
     //
   }
@@ -250,32 +196,4 @@ function NoPushBack() {
   memoryjs.writeMemory(processObject.handle, address4, 0x90, memoryjs.BYTE);
   memoryjs.writeMemory(processObject.handle, address5, 0x90, memoryjs.BYTE);
   memoryjs.writeMemory(processObject.handle, address6, 0x90, memoryjs.BYTE);
-}
-
-function testing() {
-  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank1, memoryjs.NORMAL, 0, 0)
-  var next = address + 7;
-  var bytes = {
-    1: memoryjs.readMemory(processObject.handle, address + 3, memoryjs.BYTE).toString(16),
-    2: memoryjs.readMemory(processObject.handle, address + 4, memoryjs.BYTE).toString(16),
-    3: memoryjs.readMemory(processObject.handle, address + 5, memoryjs.BYTE).toString(16),
-    4: memoryjs.readMemory(processObject.handle, address + 6, memoryjs.BYTE).toString(16),
-  }
-  var offsetStr = '0x' + bytes['4'] + bytes['3'] + bytes['2'] + bytes['1']
-  var offsetHex = parseInt(offsetStr)
-  var pointer = next + offsetHex
-  var dword = memoryjs.readMemory(processObject.handle, pointer, memoryjs.DWORD).toString(16)
-  var offsetStr2 = '0x' + dword.substring(1, dword.length)
-  var offsetHex2 = parseInt(offsetStr2)
-  var base = processObject.modBaseAddr
-  var func = base+offsetHex2;
-  var target = func+1;
-  var rank = memoryjs.readMemory(processObject.handle, target, memoryjs.BYTE)
-  
-  console.log(address.toString(16))
-  console.log(next.toString(16))
-  console.log(pointer.toString(16))
-  console.log(base.toString(16))
-  console.log(target.toString(16))
-  console.log(rank)
 }
