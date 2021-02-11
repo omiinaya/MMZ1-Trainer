@@ -158,6 +158,7 @@ function GodMode(on) {
   var target = health+8
   if (on) {
     console.log('God Mode has been enabled.')
+    console.log(target.toString(16))
     memoryjs.writeMemory(processObject.handle, target, 0x80, memoryjs.BYTE);
   } else {
     console.log('God Mode has been disabled.')
@@ -166,7 +167,7 @@ function GodMode(on) {
 }
 
 function RankS(on) {
-  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank, memoryjs.NORMAL, 0, 0)
+  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank1, memoryjs.NORMAL, 0, 0)
   var next = address + 7;
   var bytes = {
     1: memoryjs.readMemory(processObject.handle, address + 3, memoryjs.BYTE).toString(16),
@@ -183,9 +184,22 @@ function RankS(on) {
   var base = processObject.modBaseAddr
   var func = base+offsetHex2;
   var target = func+1;
+  //
+  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank2, memoryjs.NORMAL, 0, 0)
+  var bytes2 = {
+    1: memoryjs.readMemory(processObject.handle, address2 + 2, memoryjs.BYTE).toString(16),
+    2: memoryjs.readMemory(processObject.handle, address2 + 3, memoryjs.BYTE).toString(16),
+    3: memoryjs.readMemory(processObject.handle, address2 + 4, memoryjs.BYTE).toString(16),
+    4: memoryjs.readMemory(processObject.handle, address2 + 5, memoryjs.BYTE).toString(16),
+  }
+  var offset2Str = '0x' + bytes2['4'] + bytes2['3'] + bytes2['2'] + bytes2['1']
+  var offset2Hex = parseInt(offset2Str)
+  //add this offset to entity list address aka A0 aka god mode address
   if (on) {
     console.log("Rank S has been enabled.")
     memoryjs.writeMemory(processObject.handle, target, 0x06, memoryjs.BYTE);
+    console.log(address2.toString(16))
+    console.log(offset2Hex.toString(16))
   } else {
     console.log("Rank S has been disabled.")
     memoryjs.writeMemory(processObject.handle, target, 0x03, memoryjs.BYTE);
@@ -239,7 +253,7 @@ function NoPushBack() {
 }
 
 function testing() {
-  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank, memoryjs.NORMAL, 0, 0)
+  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank1, memoryjs.NORMAL, 0, 0)
   var next = address + 7;
   var bytes = {
     1: memoryjs.readMemory(processObject.handle, address + 3, memoryjs.BYTE).toString(16),
