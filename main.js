@@ -25,7 +25,7 @@ var godModeT;
 
 //static
 var processObject;
-var defaults = {};
+var addresses;
 
 function createWindow(title) {
   const window = new BrowserWindow({
@@ -82,6 +82,7 @@ function getGameWindow() {
   for (var i = 0; i < processes.length; i++) {
     if (processes[i].szExeFile == target) {
       processObject = memoryjs.openProcess(target);
+      addresses = init(processObject)
     }
   }
 }
@@ -129,7 +130,7 @@ ipc.on('Disable', function (event, arg) {
 })
 
 function GodMode(on) {
-  var target = init(processObject).invincible;
+  var target = addresses.invincible;
   if (on) {
     console.log('God Mode has been enabled.')
     memoryjs.writeMemory(processObject.handle, target,      0x80, memoryjs.BYTE);
@@ -140,10 +141,10 @@ function GodMode(on) {
 }
 
 function RankS(on) {
-  var target = init(processObject).ranks1;
-  var target2 = init(processObject).ranks2;
-  var target3 = init(processObject).ranks3;
-  var target4 = init(processObject).ranks4;
+  var target  = addresses.ranks1;
+  var target2 = addresses.ranks2;
+  var target3 = addresses.ranks3;
+  var target4 = addresses.ranks4;
   if (on) {
     console.log("Rank S has been enabled.")
     memoryjs.writeMemory(processObject.handle, target,      0x06, memoryjs.BYTE);
@@ -162,6 +163,16 @@ function RankS(on) {
     console.log("Rank S has been disabled.")
     memoryjs.writeMemory(processObject.handle, target,      0x03, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target2,     0x03, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3,     0x88, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3+1,   0x8B, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3+2,   0x28, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3+3,   0x02, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3+4,   0x00, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3+5,   0x00, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target4,     0x45, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target4 + 1, 0x88, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target4 + 2, 0x41, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target4 + 3, 0x01, memoryjs.BYTE);
   }
 }
 
