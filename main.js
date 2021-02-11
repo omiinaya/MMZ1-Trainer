@@ -166,16 +166,29 @@ function GodMode(on) {
 }
 
 function RankS(on) {
-  NoPushBack()
-  var address = 0x14032C251;
-  const pointer = memoryjs.readMemory(processObject.handle, address, 'dword');
+  var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank, memoryjs.NORMAL, 0, 0)
+  var next = address + 7;
+  var bytes = {
+    1: memoryjs.readMemory(processObject.handle, address + 3, memoryjs.BYTE).toString(16),
+    2: memoryjs.readMemory(processObject.handle, address + 4, memoryjs.BYTE).toString(16),
+    3: memoryjs.readMemory(processObject.handle, address + 5, memoryjs.BYTE).toString(16),
+    4: memoryjs.readMemory(processObject.handle, address + 6, memoryjs.BYTE).toString(16),
+  }
+  var offsetStr = '0x' + bytes['4'] + bytes['3'] + bytes['2'] + bytes['1']
+  var offsetHex = parseInt(offsetStr)
+  var pointer = next + offsetHex
+  var dword = memoryjs.readMemory(processObject.handle, pointer, memoryjs.DWORD).toString(16)
+  var offsetStr2 = '0x' + dword.substring(1, dword.length)
+  var offsetHex2 = parseInt(offsetStr2)
+  var base = processObject.modBaseAddr
+  var func = base+offsetHex2;
+  var target = func+1;
   if (on) {
     console.log("Rank S has been enabled.")
-    console.log(pointer)
-    const ptr = memoryjs.readMemory(processObject.handle, pointer, 'dword');
-    console.log(ptr)
+    memoryjs.writeMemory(processObject.handle, target, 0x06, memoryjs.BYTE);
   } else {
     console.log("Rank S has been disabled.")
+    memoryjs.writeMemory(processObject.handle, target, 0x03, memoryjs.BYTE);
   }
 }
 
