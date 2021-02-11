@@ -33,8 +33,8 @@ function init(processObject) {
 
     var dword = memoryjs.readMemory(processObject.handle, pointer, memoryjs.DWORD).toString(16)
     var rel = '0x' + dword.substring(1, dword.length)
-    var func = base + parseInt(rel);
-    var ranks1 = func + 1;
+    var lives = base + parseInt(rel);
+    var ranks1 = lives + 1;
 
     //RANK S - 2
     var address3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank2, memoryjs.NORMAL, 0, 0)
@@ -55,14 +55,25 @@ function init(processObject) {
     //RANK S - 4
     var address5 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank4, memoryjs.NORMAL, 0, 0)
     var ranks4 = address5+14
+    
+    //INFINITE LIVES - 1
+    var address6 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.infinitelives, memoryjs.NORMAL, 0, 0)
+    var infinitelives1 = address6;
+
+    //INFINITE LIVES - 2
+    var infinitelives2 = address6+1;
+    console.log(address6.toString(16))
 
     var addresses = {
-        'health': health,
-        'invincible': invincible,
-        'ranks1': ranks1,
-        'ranks2': ranks2,
-        'ranks3': ranks3,
-        'ranks4': ranks4,
+        'health'        : health,
+        'invincible'    : invincible,
+        'ranks1'        : ranks1,
+        'ranks2'        : ranks2,
+        'ranks3'        : ranks3,
+        'ranks4'        : ranks4,
+        'infinitelives1': infinitelives1,
+        'infinitelives2': infinitelives2,
+        'lives'         : lives,
     }
     return addresses
 }

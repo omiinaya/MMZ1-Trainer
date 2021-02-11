@@ -9,6 +9,7 @@ const ipc = require('electron').ipcMain
 //modules
 const signatures = require('./assets/JS/signatures');
 const init = require('./initialize.js');
+//const Addresses = require('./assets/JS/addresses')
 
 //target
 //var target = 'Craftopia.exe'
@@ -133,21 +134,21 @@ function GodMode(on) {
   var target = addresses.invincible;
   if (on) {
     console.log('God Mode has been enabled.')
-    memoryjs.writeMemory(processObject.handle, target,      0x80, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target, 0x80, memoryjs.BYTE);
   } else {
     console.log('God Mode has been disabled.')
-    memoryjs.writeMemory(processObject.handle, target,      0x00, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target, 0x00, memoryjs.BYTE);
   }
 }
 
 function RankS(on) {
-  var target  = addresses.ranks1;
+  var target1 = addresses.ranks1;
   var target2 = addresses.ranks2;
   var target3 = addresses.ranks3;
   var target4 = addresses.ranks4;
   if (on) {
     console.log("Rank S has been enabled.")
-    memoryjs.writeMemory(processObject.handle, target,      0x06, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target1,     0x06, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target2,     0x06, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target3,     0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target3 + 1, 0x90, memoryjs.BYTE);
@@ -161,14 +162,14 @@ function RankS(on) {
     memoryjs.writeMemory(processObject.handle, target4 + 3, 0x90, memoryjs.BYTE);
   } else {
     console.log("Rank S has been disabled.")
-    memoryjs.writeMemory(processObject.handle, target,      0x03, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target1,     0x03, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target2,     0x03, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target3,     0x88, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, target3+1,   0x8B, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, target3+2,   0x28, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, target3+3,   0x02, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, target3+4,   0x00, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, target3+5,   0x00, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3 + 1, 0x8B, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3 + 2, 0x28, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3 + 3, 0x02, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3 + 4, 0x00, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3 + 5, 0x00, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target4,     0x45, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target4 + 1, 0x88, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target4 + 2, 0x41, memoryjs.BYTE);
@@ -177,17 +178,19 @@ function RankS(on) {
 }
 
 function InfiniteLives(on) {
-  //default
-  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.infinitelives, memoryjs.NORMAL, 0, 0)
-  var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.infinitelives, memoryjs.NORMAL, 1, 0)
+  var target1 = addresses.lives
+  var target2 = addresses.infinitelives1
+  var target3 = addresses.infinitelives2
+  console.log(target3.toString(16))
   if (on) {
     console.log("Infinite Lives has been enabled.")
-    memoryjs.writeMemory(processObject.handle, address1, 0x90, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address2, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target1, 0x09, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target2, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3, 0x90, memoryjs.BYTE);
   } else {
     console.log("Infinite Lives has been disabled.")
-    memoryjs.writeMemory(processObject.handle, address1, 0xFE, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, address2, 0x08, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target2, 0xFE, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3, 0x08, memoryjs.BYTE);
   }
 }
 
