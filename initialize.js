@@ -2,8 +2,11 @@ const signatures = require('./assets/JS/signatures');
 const memoryjs = require('memoryjs');
 
 function init(processObject) {
+    //BASE
+    var base = '0x'+memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.base, memoryjs.NORMAL, 0, 0).toString(16)
+
     //UNIVERSAL
-    var base = processObject.modBaseAddr; //<-----------------------------------------------------------| Base Address
+    var modBase = processObject.modBaseAddr; //<-----------------------------------------------------------| Base Address
 
     //GOD MODE
     var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.health, memoryjs.NORMAL, 0, 0)
@@ -32,7 +35,7 @@ function init(processObject) {
     var pointer = next2 + parseInt(ptr2)
     var dword = memoryjs.readMemory(processObject.handle, pointer, memoryjs.DWORD).toString(16)
     var rel = '0x' + dword.substring(1, dword.length)
-    var lives = base + parseInt(rel); //<--------------------------------------------------------------| Lives Address
+    var lives = modBase + parseInt(rel); //<--------------------------------------------------------------| Lives Address
     var ranks1 = lives + 1; //<------------------------------------------------------------------------| Rank 1 Address
 
     //RANK S - 2
@@ -61,9 +64,18 @@ function init(processObject) {
 
     //INFINITE LIVES - 2
     var infinitelives2 = address6+1; //<----------------------------------------------------------------| Infinite Lives 2 Address
-    console.log(address6.toString(16))
+
+    //CRYSTALS
+    var crystals1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.crystals1, memoryjs.NORMAL, 0, 0)
+    var bytes4 = {
+        1: memoryjs.readMemory(processObject.handle, crystals1+3, memoryjs.BYTE).toString(16),
+        2: memoryjs.readMemory(processObject.handle, crystals1+4, memoryjs.BYTE).toString(16)
+    }
+    var len = '0x'+(bytes4[2]+bytes4[1]).padStart(8, '0')
+    var crystals2 = parseInt(base)+parseInt(len)
 
     var addresses = {
+        'base'          : base,
         'health'        : health,
         'invincible'    : invincible,
         'ranks1'        : ranks1,
@@ -73,7 +85,24 @@ function init(processObject) {
         'infinitelives1': infinitelives1,
         'infinitelives2': infinitelives2,
         'lives'         : lives,
+        'crystals1'     : crystals1,
+        'crystals2'     : crystals2,
     }
+    var readable = {
+        'base'          : base.toString(16),
+        'health'        : health.toString(16),
+        'invincible'    : invincible.toString(16),
+        'ranks1'        : ranks1.toString(16),
+        'ranks2'        : ranks2.toString(16),
+        'ranks3'        : ranks3.toString(16),
+        'ranks4'        : ranks4.toString(16),
+        'infinitelives1': infinitelives1.toString(16),
+        'infinitelives2': infinitelives2.toString(16),
+        'lives'         : lives.toString(16),
+        'crystals1'     : crystals1.toString(16),
+        'crystals2'         : crystals2.toString(16)
+    }
+    console.log(readable)
     return addresses
 }
 

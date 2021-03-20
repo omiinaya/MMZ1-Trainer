@@ -3,16 +3,16 @@ const Addresses = {
     playerX: 0x142520A40,
     playerY: 0x142520A44,
     //rank
-    rank1: 0x142510229,   //06 for S
-    rank2: 0x142520BC8,   //06
+    //rank1: 0x142510229,   //06 for S
+    //rank2: 0x142520BC8,   //06
     //player
-    health: 0x142520A98,
-    lives: 0x142510228,
+    //health: 0x142520A98,
+    //lives: 0x142510228,
     crystals1: 0x142520C4E,
     crystals2: 0x142520C4F,
     healthGUI: 0x140104F90,
     dash: 0x142520B68,
-    god: 0x142520AA0,
+    //god: 0x142520AA0,
     //weapons
     zaber1: 0x142520BDE,
     zaber2: 0x142520BDF,
@@ -40,7 +40,7 @@ const Addresses = {
     //misc
     hover: 0x142520A4C,
     reflect: 0x140371BDA,
-    decreacelives: 0x14032B592
+    //decreacelives: 0x14032B592
 }
 
 //140371D31 - address of flinch on player hit
