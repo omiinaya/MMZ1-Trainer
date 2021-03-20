@@ -66,14 +66,15 @@ function init(processObject) {
     var infinitelives2 = address6+1; //<----------------------------------------------------------------| Infinite Lives 2 Address
 
     //CRYSTALS
-    var crystals1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.crystals1, memoryjs.NORMAL, 0, 0)
+    var address7 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.crystals1, memoryjs.NORMAL, 0, 0)
+    var crystals1 = address7; //<=======================================================================| Crystals Update Address
     var bytes4 = {
         1: memoryjs.readMemory(processObject.handle, crystals1+3, memoryjs.BYTE).toString(16),
         2: memoryjs.readMemory(processObject.handle, crystals1+4, memoryjs.BYTE).toString(16)
     }
     var len = '0x'+(bytes4[2]+bytes4[1]).padStart(8, '0')
-    var crystals2 = parseInt(base)+parseInt(len)
-
+    var crystals2 = parseInt(base)+parseInt(len) //<----------------------------------------------------| Crystals Owned Address
+ 
     var addresses = {
         'base'          : base,
         'health'        : health,
