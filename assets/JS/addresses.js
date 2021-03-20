@@ -8,8 +8,8 @@ const Addresses = {
     //player
     //health: 0x142520A98,
     //lives: 0x142510228,
-    crystals1: 0x142520C4E,
-    crystals2: 0x142520C4F,
+    //crystals1: 0x142520C4E,
+    //crystals2: 0x142520C4F,
     healthGUI: 0x140104F90,
     dash: 0x142520B68,
     //god: 0x142520AA0,

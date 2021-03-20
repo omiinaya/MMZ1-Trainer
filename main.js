@@ -148,20 +148,20 @@ function RankS(on) {
   var target4 = addresses.ranks4;
   if (on) {
     console.log("Rank S has been enabled.")
-    memoryjs.writeMemory(processObject.handle, target1,     0x06, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, target2,     0x06, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, target3,     0x909090909090, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, target4,     0x90909090, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target1, 0x06, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target2, 0x06, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3, 0x909090909090, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target4, 0x90909090, memoryjs.BYTE);
   } else {
     console.log("Rank S has been disabled.")
-    memoryjs.writeMemory(processObject.handle, target1,     0x03, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, target2,     0x03, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, target3,     0x88, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target1, 0x03, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target2, 0x03, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target3, 0x88, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target3 + 1, 0x8B, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target3 + 2, 0x28, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target3 + 3, 0x02, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target3 + 4, 0x0000, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, target4,     0x45, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, target4, 0x45, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target4 + 1, 0x88, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target4 + 2, 0x41, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, target4 + 3, 0x01, memoryjs.BYTE);
@@ -171,7 +171,7 @@ function RankS(on) {
 function InfiniteLives(on) {
   var target1 = addresses.lives
   var target2 = addresses.infinitelives1
-  var target3 = target2+1
+  var target3 = target2 + 1
   if (on) {
     console.log("Infinite Lives has been enabled.")
     memoryjs.writeMemory(processObject.handle, target1, 0x09, memoryjs.BYTE);
@@ -185,8 +185,17 @@ function InfiniteLives(on) {
 }
 
 function InfiniteCrystals(on) {
+  var value = memoryjs.readMemory(processObject.handle, addresses.crystals2, memoryjs.INT);
+  console.log(value)
   if (on) {
-    //
+    memoryjs.writeMemory(processObject.handle, addresses.crystals1,     0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 1, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 2, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 3, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 4, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 5, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 6, 0x90, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.crystals2, 9999, memoryjs.INT);
   } else {
     //
   }

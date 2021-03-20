@@ -101,7 +101,7 @@ function init(processObject) {
         'infinitelives2': infinitelives2.toString(16),
         'lives'         : lives.toString(16),
         'crystals1'     : crystals1.toString(16),
-        'crystals2'         : crystals2.toString(16)
+        'crystals2'     : crystals2.toString(16)
     }
     console.log(readable)
     return addresses
