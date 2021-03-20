@@ -22,7 +22,9 @@ var visible;
 
 //timers
 var waitingT;
-var godModeT;
+
+//defaults
+var crytals;
 
 //static
 var processObject;
@@ -185,8 +187,6 @@ function InfiniteLives(on) {
 }
 
 function InfiniteCrystals(on) {
-  var value = memoryjs.readMemory(processObject.handle, addresses.crystals2, memoryjs.INT);
-  console.log(value)
   if (on) {
     memoryjs.writeMemory(processObject.handle, addresses.crystals1,     0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 1, 0x90, memoryjs.BYTE);
@@ -195,7 +195,10 @@ function InfiniteCrystals(on) {
     memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 4, 0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 5, 0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 6, 0x90, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, addresses.crystals2, 9999, memoryjs.INT);
+    //saving current crystals to a global variable
+    crystals = memoryjs.readMemory(processObject.handle, addresses.crystals2, memoryjs.INT);
+    //changing current number of crystals to 9999
+    memoryjs.writeMemory(processObject.handle, addresses.crystals2,     9999, memoryjs.INT);
   } else {
     memoryjs.writeMemory(processObject.handle, addresses.crystals1,     0x66, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 1, 0x89, memoryjs.BYTE);
@@ -204,20 +207,17 @@ function InfiniteCrystals(on) {
     memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 4, 0x02, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 5, 0x00, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 6, 0x00, memoryjs.BYTE);
+    //setting crystals to old value after turning off
+    memoryjs.writeMemory(processObject.handle, addresses.crystals2, crystals, memoryjs.INT);
   }
 }
 
 function NoPushBack() {
   var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.nopushback, memoryjs.NORMAL, 47, 0)
-  var address2 = address1 + 1;
-  var address3 = address1 + 2;
-  var address4 = address1 + 3;
-  var address5 = address1 + 4;
-  var address6 = address1 + 5;
-  memoryjs.writeMemory(processObject.handle, address1, 0x90, memoryjs.BYTE);
-  memoryjs.writeMemory(processObject.handle, address2, 0x90, memoryjs.BYTE);
-  memoryjs.writeMemory(processObject.handle, address3, 0x90, memoryjs.BYTE);
-  memoryjs.writeMemory(processObject.handle, address4, 0x90, memoryjs.BYTE);
-  memoryjs.writeMemory(processObject.handle, address5, 0x90, memoryjs.BYTE);
-  memoryjs.writeMemory(processObject.handle, address6, 0x90, memoryjs.BYTE);
+  memoryjs.writeMemory(processObject.handle, address1,   0x90, memoryjs.BYTE);
+  memoryjs.writeMemory(processObject.handle, address1+1, 0x90, memoryjs.BYTE);
+  memoryjs.writeMemory(processObject.handle, address1+2, 0x90, memoryjs.BYTE);
+  memoryjs.writeMemory(processObject.handle, address1+3, 0x90, memoryjs.BYTE);
+  memoryjs.writeMemory(processObject.handle, address1+4, 0x90, memoryjs.BYTE);
+  memoryjs.writeMemory(processObject.handle, address1+5, 0x90, memoryjs.BYTE);
 }
