@@ -24,8 +24,8 @@ function toggleAll() {
         toggleA('God Mode')
         document.getElementById('Rank S').checked = true
         toggleA('Rank S')
-        document.getElementById('Inifinite Lives').checked = true
-        toggleA('Inifinite Lives')
+        document.getElementById('Infinite Lives').checked = true
+        toggleA('Infinite Lives')
         document.getElementById('Infinite Crystals').checked = true
         toggleA('Infinite Crystals')
     } else {
@@ -33,8 +33,8 @@ function toggleAll() {
         toggleA('God Mode')
         document.getElementById('Rank S').checked = false
         toggleA('Rank S')
-        document.getElementById('Inifinite Lives').checked = false
-        toggleA('Inifinite Lives')
+        document.getElementById('Infinite Lives').checked = false
+        toggleA('Infinite Lives')
         document.getElementById('Infinite Crystals').checked = false
         toggleA('Infinite Crystals')
     }

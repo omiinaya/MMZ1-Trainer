@@ -19,8 +19,8 @@ function init(processObject) {
     var ptr = '0x' + bytes['4'] + bytes['3'] + bytes['2'] + bytes['1']
     var next = address + 8;
 
-    var health = next + parseInt(ptr); //<-------------------------------------------------------------| Health Address
-    var invincible = health + 8; //<-------------------------------------------------------------------| Invincible Address
+    var health = next + parseInt(ptr); //<--------------------------------------------------------------| Health Address
+    var invincible = health + 8; //<--------------------------------------------------------------------| Invincible Address
 
     //RANK S - 1
     var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank1, memoryjs.NORMAL, 0, 0)
@@ -35,8 +35,8 @@ function init(processObject) {
     var pointer = next2 + parseInt(ptr2)
     var dword = memoryjs.readMemory(processObject.handle, pointer, memoryjs.DWORD).toString(16)
     var rel = '0x' + dword.substring(1, dword.length)
-    var lives = modBase + parseInt(rel); //<--------------------------------------------------------------| Lives Address
-    var ranks1 = lives + 1; //<------------------------------------------------------------------------| Rank 1 Address
+    var lives = modBase + parseInt(rel); //<------------------------------------------------------------| Lives Address
+    var ranks1 = lives + 1; //<-------------------------------------------------------------------------| Rank 1 Address
 
     //RANK S - 2
     var address3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank2, memoryjs.NORMAL, 0, 0)
