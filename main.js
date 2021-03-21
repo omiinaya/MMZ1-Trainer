@@ -9,6 +9,7 @@ const ipc = require('electron').ipcMain
 //modules
 const signatures = require('./assets/JS/signatures');
 const init = require('./initialize.js');
+const { allowedNodeEnvironmentFlags } = require('process')
 //const Addresses = require('./assets/JS/addresses')
 
 //target
@@ -100,6 +101,9 @@ app.on('ready', () => {
 })
 
 ipc.on('Enable', function (event, arg) {
+  if (arg === 'All') {
+    EnableAll(true)
+  }
   if (arg === 'God Mode') {
     GodMode(true)
   }
@@ -112,9 +116,13 @@ ipc.on('Enable', function (event, arg) {
   if (arg === 'Infinite Crystals') {
     InfiniteCrystals(true)
   }
+  console.log(arg+" enabled.")
 })
 
 ipc.on('Disable', function (event, arg) {
+  if (arg === 'All') {
+    EnableAll(false)
+  }
   if (arg === 'God Mode') {
     GodMode(false)
   }
@@ -127,21 +135,33 @@ ipc.on('Disable', function (event, arg) {
   if (arg === 'Infinite Crystals') {
     InfiniteCrystals(false)
   }
+  console.log(arg+" disabled.")
 })
+
+function EnableAll(on) {
+  if (on) {
+    GodMode(true)
+    RankS(true)
+    InfiniteLives(true)
+    InfiniteCrystals(true)
+  } else {
+    GodMode(false)
+    RankS(false)
+    InfiniteLives(false)
+    InfiniteCrystals(false)
+  }
+}
 
 function GodMode(on) {
   if (on) {
-    console.log('God Mode has been enabled.')
     memoryjs.writeMemory(processObject.handle, addresses.invincible, 0x80, memoryjs.BYTE);
   } else {
-    console.log('God Mode has been disabled.')
     memoryjs.writeMemory(processObject.handle, addresses.invincible, 0x00, memoryjs.BYTE);
   }
 }
 
 function RankS(on) {
   if (on) {
-    console.log("Rank S has been enabled.")
     memoryjs.writeMemory(processObject.handle, addresses.ranks1,     0x06, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.ranks2,     0x06, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.ranks3,     0x90, memoryjs.BYTE);
@@ -155,7 +175,6 @@ function RankS(on) {
     memoryjs.writeMemory(processObject.handle, addresses.ranks4 + 2, 0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.ranks4 + 3, 0x90, memoryjs.BYTE);
   } else {
-    console.log("Rank S has been disabled.")
     memoryjs.writeMemory(processObject.handle, addresses.ranks1,     0x03, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.ranks2,     0x03, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.ranks3,     0x88, memoryjs.BYTE);
@@ -173,18 +192,12 @@ function RankS(on) {
 
 function InfiniteLives(on) {
   if (on) {
-    console.log("Infinite Lives has been enabled.")
     lives = memoryjs.readMemory(processObject.handle, addresses.lives, memoryjs.BYTE);
-    //
     memoryjs.writeMemory(processObject.handle, addresses.lives,             0x09, memoryjs.BYTE);
-    //memoryjs.writeMemory(processObject.handle, addresses.lives + 1,         0x09, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.infinitelives1,    0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.infinitelives1+1,  0x90, memoryjs.BYTE);
   } else {
-    console.log("Infinite Lives has been disabled.")
-    console.log(lives)
     memoryjs.writeMemory(processObject.handle, addresses.lives, lives, memoryjs.BYTE);
-    //
     memoryjs.writeMemory(processObject.handle, addresses.infinitelives1, 0xFE, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.infinitelives1+1, 0x08, memoryjs.BYTE);
   }
@@ -192,7 +205,6 @@ function InfiniteLives(on) {
 
 function InfiniteCrystals(on) {
   if (on) {
-    console.log("Infinite Crystals has been enabled.")
     memoryjs.writeMemory(processObject.handle, addresses.crystals1,     0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 1, 0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 2, 0x90, memoryjs.BYTE);
@@ -205,7 +217,6 @@ function InfiniteCrystals(on) {
     //changing current number of crystals to 9999
     memoryjs.writeMemory(processObject.handle, addresses.crystals2,     9999, memoryjs.INT);
   } else {
-    console.log("Infinite Crystals has been disabled.")
     memoryjs.writeMemory(processObject.handle, addresses.crystals1,     0x66, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 1, 0x89, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 2, 0x81, memoryjs.BYTE);

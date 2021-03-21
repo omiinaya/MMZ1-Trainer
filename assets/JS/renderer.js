@@ -21,21 +21,15 @@ function toggleA(a) {
 function toggleAll() {
     if (document.getElementById('Enable/Disable All').checked) {
         document.getElementById('God Mode').checked = true
-        toggleA('God Mode')
         document.getElementById('Rank S').checked = true
-        toggleA('Rank S')
         document.getElementById('Infinite Lives').checked = true
-        toggleA('Infinite Lives')
         document.getElementById('Infinite Crystals').checked = true
-        toggleA('Infinite Crystals')
+        ipc.send('Enable', 'All')
     } else {
         document.getElementById('God Mode').checked = false
-        toggleA('God Mode')
         document.getElementById('Rank S').checked = false
-        toggleA('Rank S')
         document.getElementById('Infinite Lives').checked = false
-        toggleA('Infinite Lives')
         document.getElementById('Infinite Crystals').checked = false
-        toggleA('Infinite Crystals')
+        ipc.send('Disable', 'All')
     }
 }
