@@ -17,11 +17,11 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+    "electron": "^11.3.0",
     "electron-packager": "^15.2.0",
     "electron-rebuild": "^2.3.4"
   },
   "dependencies": {
-    "electron": "^11.2.0",
     "electron-overlay-window": "^1.0.4",
     "iohook": "^0.7.2",
     "memoryjs": "^3.4.0",

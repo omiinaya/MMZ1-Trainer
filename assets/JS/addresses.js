@@ -41,6 +41,8 @@ const Addresses = {
     hover: 0x142520A4C,
     reflect: 0x140371BDA,
     //decreacelives: 0x14032B592
+    codename: 0x14251022A
+    //05 for immortal
 }
 
 //140371D31 - address of flinch on player hit

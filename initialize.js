@@ -36,7 +36,7 @@ function init(processObject) {
     var dword = memoryjs.readMemory(processObject.handle, pointer, memoryjs.DWORD).toString(16)
     var rel = '0x' + dword.substring(1, dword.length)
     var lives = modBase + parseInt(rel); //<------------------------------------------------------------| Lives Address
-    var ranks1 = lives + 1; //<-------------------------------------------------------------------------| Rank 1 Address
+    var ranks1 = lives + 1; //<-------------------------------------------------------------------------| Rank Address
 
     //RANK S - 2
     var address3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank2, memoryjs.NORMAL, 0, 0)
@@ -74,6 +74,12 @@ function init(processObject) {
     }
     var len = '0x'+(bytes4[2]+bytes4[1]).padStart(8, '0')
     var crystals2 = parseInt(base)+parseInt(len) //<----------------------------------------------------| Crystals Owned Address
+
+    //CODENAME
+    var codename1 = lives + 2; //<----------------------------------------------------------------------| Codename Address
+    var codename2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.codename1, memoryjs.NORMAL, 0, 0)
+    var codename3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.codename2, memoryjs.NORMAL, 23, 0)
+    var codename4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.codename3, memoryjs.NORMAL, 11, 0)
  
     var addresses = {
         'base'          : base,
@@ -88,20 +94,28 @@ function init(processObject) {
         'lives'         : lives,
         'crystals1'     : crystals1,
         'crystals2'     : crystals2,
+        'codename1'      : codename1,
+        'codename2'      : codename2,
+        'codename3'      : codename3,
+        'codename4'      : codename4,
     }
     var readable = {
-        'base'          : base.toString(16),
-        'health'        : health.toString(16),
-        'invincible'    : invincible.toString(16),
-        'ranks1'        : ranks1.toString(16),
-        'ranks2'        : ranks2.toString(16),
-        'ranks3'        : ranks3.toString(16),
-        'ranks4'        : ranks4.toString(16),
-        'infinitelives1': infinitelives1.toString(16),
-        'infinitelives2': infinitelives2.toString(16),
-        'lives'         : lives.toString(16),
-        'crystals1'     : crystals1.toString(16),
-        'crystals2'     : crystals2.toString(16)
+        'base'          : base.toString(16).toUpperCase(),
+        'health'        : health.toString(16).toUpperCase(),
+        'invincible'    : invincible.toString(16).toUpperCase(),
+        'ranks1'        : ranks1.toString(16).toUpperCase(),
+        'ranks2'        : ranks2.toString(16).toUpperCase(),
+        'ranks3'        : ranks3.toString(16).toUpperCase(),
+        'ranks4'        : ranks4.toString(16).toUpperCase(),
+        'infinitelives1': infinitelives1.toString(16).toUpperCase(),
+        'infinitelives2': infinitelives2.toString(16).toUpperCase(),
+        'lives'         : lives.toString(16).toUpperCase(),
+        'crystals1'     : crystals1.toString(16).toUpperCase(),
+        'crystals2'     : crystals2.toString(16).toUpperCase(),
+        'codename1'     : codename1.toString(16).toUpperCase(),
+        'codename2'     : codename2.toString(16).toUpperCase(),
+        'codename3'     : codename3.toString(16).toUpperCase(),
+        'codename4'     : codename4.toString(16).toUpperCase()
     }
     console.log(readable)
     return addresses
