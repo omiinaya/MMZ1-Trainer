@@ -7,14 +7,8 @@ const ipc = electron.ipcRenderer
 function toggleA(a) {
     if (document.getElementById(a).checked) {
         ipc.send('Enable', a)
-        if (a == 'Enable/Disable All') {
-            toggleAll()
-        }
     } else {
         ipc.send('Disable', a)
-        if (a == 'Enable/Disable All') {
-            toggleAll()
-        }
     }
 }
 

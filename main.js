@@ -101,39 +101,43 @@ app.on('ready', () => {
 })
 
 ipc.on('Enable', function (event, arg) {
-  if (arg === 'All') {
-    EnableAll(true)
-  }
-  if (arg === 'God Mode') {
-    GodMode(true)
-  }
-  if (arg === 'Rank S') {
-    RankS(true)
-  }
-  if (arg === 'Infinite Lives') {
-    InfiniteLives(true)
-  }
-  if (arg === 'Infinite Crystals') {
-    InfiniteCrystals(true)
+  switch (arg) {
+    case 'All':
+      EnableAll(true)
+      break;
+    case 'God Mode':
+      GodMode(true)
+      break;
+    case 'Rank S':
+      RankS(true)
+      break;
+    case 'Infinite Lives':
+      InfiniteLives(true)
+      break;
+    case 'Infinite Crystals':
+      InfiniteCrystals(true)
+      break;
   }
   console.log(arg+" enabled.")
 })
 
 ipc.on('Disable', function (event, arg) {
-  if (arg === 'All') {
-    EnableAll(false)
-  }
-  if (arg === 'God Mode') {
-    GodMode(false)
-  }
-  if (arg === 'Rank S') {
-    RankS(false)
-  }
-  if (arg === 'Infinite Lives') {
-    InfiniteLives(false)
-  }
-  if (arg === 'Infinite Crystals') {
-    InfiniteCrystals(false)
+  switch (arg) {
+    case 'All':
+      EnableAll(false)
+      break;
+    case 'God Mode':
+      GodMode(false)
+      break;
+    case 'Rank S':
+      RankS(false)
+      break;
+    case 'Infinite Lives':
+      InfiniteLives(false)
+      break;
+    case 'Infinite Crystals':
+      InfiniteCrystals(false)
+      break;
   }
   console.log(arg+" disabled.")
 })
@@ -163,7 +167,6 @@ function GodMode(on) {
 function RankS(on) {
   if (on) {
     rank = memoryjs.readMemory(processObject.handle, addresses.ranks1, memoryjs.BYTE);
-    //
     memoryjs.writeMemory(processObject.handle, addresses.ranks1,     0x06, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.ranks2,     0x06, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.ranks3,     0x90, memoryjs.BYTE);
