@@ -162,6 +162,8 @@ function GodMode(on) {
 
 function RankS(on) {
   if (on) {
+    rank = memoryjs.readMemory(processObject.handle, addresses.ranks1, memoryjs.BYTE);
+    //
     memoryjs.writeMemory(processObject.handle, addresses.ranks1,     0x06, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.ranks2,     0x06, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.ranks3,     0x90, memoryjs.BYTE);
@@ -175,8 +177,8 @@ function RankS(on) {
     memoryjs.writeMemory(processObject.handle, addresses.ranks4 + 2, 0x90, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.ranks4 + 3, 0x90, memoryjs.BYTE);
   } else {
-    memoryjs.writeMemory(processObject.handle, addresses.ranks1,     0x03, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, addresses.ranks2,     0x03, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.ranks1,     rank, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.ranks2,     rank, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.ranks3,     0x88, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.ranks3 + 1, 0x8B, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.ranks3 + 2, 0x28, memoryjs.BYTE);
