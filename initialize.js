@@ -1,5 +1,6 @@
 const signatures = require('./assets/JS/signatures');
 const memoryjs = require('memoryjs');
+const { maxsaber1 } = require('./assets/JS/signatures');
 
 function init(processObject) {
     //BASE
@@ -20,7 +21,7 @@ function init(processObject) {
     var next = address + 8;
 
     var health = next + parseInt(ptr); //<--------------------------------------------------------------| Health Address
-    var invincible = health + 8; //<--------------------------------------------------------------------| Invincible Address
+    var invincible = next + parseInt(ptr) + 8; //<------------------------------------------------------| Invincible Address
 
     //RANK S - 1
     var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank1, memoryjs.NORMAL, 0, 0)
@@ -80,6 +81,10 @@ function init(processObject) {
     var codename2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.codename1, memoryjs.NORMAL, 0, 0)
     var codename3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.codename2, memoryjs.NORMAL, 23, 0)
     var codename4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.codename3, memoryjs.NORMAL, 11, 0)
+
+    //MAX WEAPONS
+    var maxsaber1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.maxsaber1, memoryjs.NORMAL, 0, 0)
+    
  
     var addresses = {
         'base'          : base,
@@ -98,6 +103,7 @@ function init(processObject) {
         'codename2'      : codename2,
         'codename3'      : codename3,
         'codename4'      : codename4,
+        'maxsaber1'      : maxsaber1,
     }
     var readable = {
         'base'          : base.toString(16).toUpperCase(),
@@ -115,7 +121,8 @@ function init(processObject) {
         'codename1'     : codename1.toString(16).toUpperCase(),
         'codename2'     : codename2.toString(16).toUpperCase(),
         'codename3'     : codename3.toString(16).toUpperCase(),
-        'codename4'     : codename4.toString(16).toUpperCase()
+        'codename4'     : codename4.toString(16).toUpperCase(),
+        'maxsaber1'     : maxsaber1.toString(16).toUpperCase()
     }
     console.log(readable)
     return addresses
