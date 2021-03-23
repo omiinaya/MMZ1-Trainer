@@ -83,7 +83,13 @@ function init(processObject) {
     var codename4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.codename3, memoryjs.NORMAL, 11, 0)
 
     //MAX WEAPONS
-    var maxsaber1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.maxsaber1, memoryjs.NORMAL, 0, 0)
+    var address8 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.maxsaber1, memoryjs.NORMAL, 3, 0)
+    var bytes5 = {
+        1: memoryjs.readMemory(processObject.handle, address8,   memoryjs.BYTE).toString(16),
+        2: memoryjs.readMemory(processObject.handle, address8+1, memoryjs.BYTE).toString(16)
+    }
+    var len2 = '0x'+(bytes5[2]+bytes5[1]).padStart(8, '0')
+    var maxsaber1 = parseInt(base)+parseInt(len2)
     
  
     var addresses = {
