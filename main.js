@@ -8,7 +8,7 @@ const ipc = require('electron').ipcMain
 
 //modules
 const signatures = require('./assets/JS/signatures');
-const init = require('./initialize.js');
+const init = require('./assets/JS/initialize.js');
 
 //target
 var target = 'MZZXLC.exe'
@@ -16,13 +16,10 @@ var target = 'MZZXLC.exe'
 //globals
 var win;
 var visible;
+var processObject;
 
 //timers
 var waitingT;
-
-//static
-var processObject;
-var addresses;
 
 function createWindow(title) {
   const window = new BrowserWindow({
@@ -277,6 +274,14 @@ function InfiniteCrystals(on) {
     memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 4, 0x02, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 5, 0x00, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.crystals1 + 6, 0x00, memoryjs.BYTE);
+  }
+}
+
+function UnlockWeapons(on) {
+  if (on) {
+
+  } else {
+    
   }
 }
 
