@@ -291,7 +291,7 @@ function UnlockWeapons(on) {
     weapons = memoryjs.readMemory(processObject.handle, addresses.weapons, memoryjs.INT);
     memoryjs.writeMemory(processObject.handle, addresses.weapons, 0x0F, memoryjs.BYTE);
   } else {
-    memoryjs.writeMemory(processObject.handle, addresses.weapons, weapons, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.weapons, weapons, memoryjs.INT);
   }
 }
 
@@ -299,11 +299,17 @@ function MaxWeapons(on) {
   if (on) {
     saber1 = memoryjs.readMemory(processObject.handle, addresses.saber1, memoryjs.INT);
     saber2 = memoryjs.readMemory(processObject.handle, addresses.saber2, memoryjs.INT);
+    saberD = memoryjs.readMemory(processObject.handle, addresses.saberD, memoryjs.INT);
+    saberJ = memoryjs.readMemory(processObject.handle, addresses.saberJ, memoryjs.INT);
     memoryjs.writeMemory(processObject.handle, addresses.saber1, 0x0F, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.saber2, 0x27, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.saberD, 0x64, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.saberJ, 0x64, memoryjs.BYTE);
   } else {
-    memoryjs.writeMemory(processObject.handle, addresses.saber1, saber1, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, addresses.saber2, saber2, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.saber1, saber1, memoryjs.INT);
+    memoryjs.writeMemory(processObject.handle, addresses.saber2, saber2, memoryjs.INT);
+    memoryjs.writeMemory(processObject.handle, addresses.saberD, saberD, memoryjs.INT);
+    memoryjs.writeMemory(processObject.handle, addresses.saberJ, saberJ, memoryjs.INT);
   }
 }
 

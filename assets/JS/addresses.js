@@ -15,9 +15,9 @@ const Addresses = {
     //god: 0x142520AA0,
     //weapons
     //zaber1: 0x142520BDE,
-    zaber2: 0x142520BDF,
-    zaberJ: 0x142520BEB,
-    zaberD: 0x142520BEA,
+    //zaber2: 0x142520BDF,
+    //zaberJ: 0x142520BEB,
+    //zaberD: 0x142520BEA,
     buster1: 0x142520BDC,
     buster2: 0x142520BDD,
     rod1: 0x142520BE0,

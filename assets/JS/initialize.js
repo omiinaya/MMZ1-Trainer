@@ -100,6 +100,8 @@ function init(processObject) {
     var len3 = '0x'+(bytes6[2]+bytes6[1]).padStart(8, '0')
     var saber1 = parseInt(base)+parseInt(len3)
     var saber2 = saber1+1
+    var saberD = saber1+12
+    var saberJ = saber1+13
  
     var addresses = {
         'base'          : base,
@@ -121,6 +123,8 @@ function init(processObject) {
         'weapons'       : weapons,
         'saber1'        : saber1,
         'saber2'        : saber2,
+        'saberD'        : saberD,
+        'saberJ'        : saberJ,
     }
     var readable = {
         'base'          : base.toString(16).toUpperCase(),
@@ -141,7 +145,9 @@ function init(processObject) {
         'codename4'     : codename4.toString(16).toUpperCase(),
         'weapons'       : weapons.toString(16).toUpperCase(),
         'saber1'        : saber1.toString(16).toUpperCase(),
-        'saber2'        : saber2.toString(16).toUpperCase()
+        'saber2'        : saber2.toString(16).toUpperCase(),
+        'saberD'        : saberD.toString(16).toUpperCase(),
+        'saberJ'        : saberJ.toString(16).toUpperCase()
     }
     console.log(readable)
     return addresses
