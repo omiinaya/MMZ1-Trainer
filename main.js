@@ -308,12 +308,16 @@ function MaxWeapons(on) {
     boomerang1 = memoryjs.readMemory(processObject.handle, addresses.boomerang1, memoryjs.INT);
     boomerang2 = memoryjs.readMemory(processObject.handle, addresses.boomerang2, memoryjs.INT);
     //
-    memoryjs.writeMemory(processObject.handle, addresses.saber1,  0x0F, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, addresses.saber2,  0x27, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, addresses.saberD,  0x64, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, addresses.saberJ,  0x64, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, addresses.buster1, 0xDC, memoryjs.BYTE);
-    memoryjs.writeMemory(processObject.handle, addresses.buster2, 0x05, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.saber1,        0x0F, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.saber2,        0x27, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.saberD,        0x64, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.saberJ,        0x64, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.buster1,       0xDC, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.buster2,       0x05, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.rod1,          0xB8, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.rod2,          0x0B, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.boomerang1,    0xF4, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.boomerang2,    0x01, memoryjs.BYTE);
   } else {
     memoryjs.writeMemory(processObject.handle, addresses.saber1,     saber1,     memoryjs.INT);
     memoryjs.writeMemory(processObject.handle, addresses.saber2,     saber2,     memoryjs.INT);
