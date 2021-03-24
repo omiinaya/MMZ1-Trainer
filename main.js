@@ -297,9 +297,13 @@ function UnlockWeapons(on) {
 
 function MaxWeapons(on) {
   if (on) {
-
+    saber1 = memoryjs.readMemory(processObject.handle, addresses.saber1, memoryjs.INT);
+    saber2 = memoryjs.readMemory(processObject.handle, addresses.saber2, memoryjs.INT);
+    memoryjs.writeMemory(processObject.handle, addresses.saber1, 0x0F, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.saber2, 0x27, memoryjs.BYTE);
   } else {
-
+    memoryjs.writeMemory(processObject.handle, addresses.saber1, saber1, memoryjs.BYTE);
+    memoryjs.writeMemory(processObject.handle, addresses.saber2, saber2, memoryjs.BYTE);
   }
 }
 

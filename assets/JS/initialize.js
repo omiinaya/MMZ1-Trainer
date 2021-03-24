@@ -92,7 +92,14 @@ function init(processObject) {
     var weapons = parseInt(base)+parseInt(len2) //<---------------------------------------------------| Weapons Unlocked Adddress
 
     //MAX WEAPONS
-    
+    var address9 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.maxsaber1, memoryjs.NORMAL, 12, 0)
+    var bytes6 = {
+        1: memoryjs.readMemory(processObject.handle, address9,   memoryjs.BYTE).toString(16),
+        2: memoryjs.readMemory(processObject.handle, address9+1, memoryjs.BYTE).toString(16)
+    }
+    var len3 = '0x'+(bytes6[2]+bytes6[1]).padStart(8, '0')
+    var saber1 = parseInt(base)+parseInt(len3)
+    var saber2 = saber1+1
  
     var addresses = {
         'base'          : base,
@@ -112,6 +119,8 @@ function init(processObject) {
         'codename3'     : codename3,
         'codename4'     : codename4,
         'weapons'       : weapons,
+        'saber1'        : saber1,
+        'saber2'        : saber2,
     }
     var readable = {
         'base'          : base.toString(16).toUpperCase(),
@@ -130,7 +139,9 @@ function init(processObject) {
         'codename2'     : codename2.toString(16).toUpperCase(),
         'codename3'     : codename3.toString(16).toUpperCase(),
         'codename4'     : codename4.toString(16).toUpperCase(),
-        'weapons'       : weapons.toString(16).toUpperCase()
+        'weapons'       : weapons.toString(16).toUpperCase(),
+        'saber1'        : saber1.toString(16).toUpperCase(),
+        'saber2'        : saber2.toString(16).toUpperCase()
     }
     console.log(readable)
     return addresses

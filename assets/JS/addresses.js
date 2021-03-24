@@ -14,7 +14,7 @@ const Addresses = {
     dash: 0x142520B68,
     //god: 0x142520AA0,
     //weapons
-    zaber1: 0x142520BDE,
+    //zaber1: 0x142520BDE,
     zaber2: 0x142520BDF,
     zaberJ: 0x142520BEB,
     zaberD: 0x142520BEA,
