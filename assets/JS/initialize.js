@@ -7,7 +7,7 @@ function init(processObject) {
     var base = '0x'+memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.base, memoryjs.NORMAL, 0, 0).toString(16)
 
     //UNIVERSAL
-    var modBase = processObject.modBaseAddr; //<-----------------------------------------------------------| Base Address
+    var modBase = processObject.modBaseAddr; //<-------------------------------------------------------| Base Address
 
     //GOD MODE
     var address = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.health, memoryjs.NORMAL, 0, 0)
@@ -20,8 +20,8 @@ function init(processObject) {
     var ptr = '0x' + bytes['4'] + bytes['3'] + bytes['2'] + bytes['1']
     var next = address + 8;
 
-    var health = next + parseInt(ptr); //<--------------------------------------------------------------| Health Address
-    var invincible = next + parseInt(ptr) + 8; //<------------------------------------------------------| Invincible Address
+    var health = next + parseInt(ptr); //<-------------------------------------------------------------| Health Address
+    var invincible = next + parseInt(ptr) + 8; //<-----------------------------------------------------| Invincible Address
 
     //RANK S - 1
     var address2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank1, memoryjs.NORMAL, 0, 0)
@@ -36,8 +36,8 @@ function init(processObject) {
     var pointer = next2 + parseInt(ptr2)
     var dword = memoryjs.readMemory(processObject.handle, pointer, memoryjs.DWORD).toString(16)
     var rel = '0x' + dword.substring(1, dword.length)
-    var lives = modBase + parseInt(rel); //<------------------------------------------------------------| Lives Address
-    var ranks1 = lives + 1; //<-------------------------------------------------------------------------| Rank Address
+    var lives = modBase + parseInt(rel); //<-----------------------------------------------------------| Lives Address
+    var ranks1 = lives + 1; //<------------------------------------------------------------------------| Rank Address
 
     //RANK S - 2
     var address3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank2, memoryjs.NORMAL, 0, 0)
@@ -49,35 +49,35 @@ function init(processObject) {
     }
     var ptr3 = '0x' + bytes3['2'] + bytes3['1']
     var ptr4 = parseInt(ptr3)-0x100
-    var ranks2 = invincible + parseInt(ptr4) //<--------------------------------------------------------| Rank 2 Address
+    var ranks2 = invincible + parseInt(ptr4) //<-------------------------------------------------------| Rank 2 Address
 
     //RANK S - 3
     var address4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank3, memoryjs.NORMAL, 0, 0)
-    var ranks3 = address4-6; //<------------------------------------------------------------------------| Rank 3 Address
+    var ranks3 = address4-6; //<-----------------------------------------------------------------------| Rank 3 Address
 
     //RANK S - 4
     var address5 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.rank4, memoryjs.NORMAL, 0, 0)
-    var ranks4 = address5+14 //<------------------------------------------------------------------------| Rank 4 Address
+    var ranks4 = address5+14 //<-----------------------------------------------------------------------| Rank 4 Address
     
     //INFINITE LIVES - 1
     var address6 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.infinitelives, memoryjs.NORMAL, 0, 0)
-    var infinitelives1 = address6; //<------------------------------------------------------------------| Infinite Lives 1 Address
+    var infinitelives1 = address6; //<-----------------------------------------------------------------| Infinite Lives 1 Address
 
     //INFINITE LIVES - 2
-    var infinitelives2 = address6+1; //<----------------------------------------------------------------| Infinite Lives 2 Address
+    var infinitelives2 = address6+1; //<---------------------------------------------------------------| Infinite Lives 2 Address
 
     //CRYSTALS
-    var address7 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.crystals1, memoryjs.NORMAL, 0, 0)
-    var crystals1 = address7; //<=======================================================================| Crystals Update Address
+    var address7 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.crystals, memoryjs.NORMAL, 0, 0)
+    var crystals1 = address7; //<----------------------------------------------------------------------| Crystals Update Address
     var bytes4 = {
         1: memoryjs.readMemory(processObject.handle, crystals1+3, memoryjs.BYTE).toString(16),
         2: memoryjs.readMemory(processObject.handle, crystals1+4, memoryjs.BYTE).toString(16)
     }
     var len = '0x'+(bytes4[2]+bytes4[1]).padStart(8, '0')
-    var crystals2 = parseInt(base)+parseInt(len) //<----------------------------------------------------| Crystals Owned Address
+    var crystals2 = parseInt(base)+parseInt(len) //<---------------------------------------------------| Crystals Owned Address
 
     //CODENAME
-    var codename1 = lives + 2; //<----------------------------------------------------------------------| Codename Address
+    var codename1 = lives + 2; //<---------------------------------------------------------------------| Codename Address
     var codename2 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.codename1, memoryjs.NORMAL, 0, 0)
     var codename3 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.codename2, memoryjs.NORMAL, 23, 0)
     var codename4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.codename3, memoryjs.NORMAL, 11, 0)
@@ -89,7 +89,7 @@ function init(processObject) {
         2: memoryjs.readMemory(processObject.handle, address8+1, memoryjs.BYTE).toString(16)
     }
     var len2 = '0x'+(bytes5[2]+bytes5[1]).padStart(8, '0')
-    var weapons = parseInt(base)+parseInt(len2) //<---------------------------------------------------| Weapons Unlocked Adddress
+    var weapons = parseInt(base)+parseInt(len2) //<----------------------------------------------------| Weapons Unlocked Adddress
 
     //MAX WEAPONS
     var address9 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.maxsaber1, memoryjs.NORMAL, 12, 0)
@@ -98,16 +98,16 @@ function init(processObject) {
         2: memoryjs.readMemory(processObject.handle, address9+1, memoryjs.BYTE).toString(16)
     }
     var len3 = '0x'+(bytes6[2]+bytes6[1]).padStart(8, '0')
-    var saber1 = parseInt(base)+parseInt(len3)
-    var saber2 = saber1+1
-    var saberD = saber1+12
-    var saberJ = saber1+13
-    var buster1 = saber1-2
-    var buster2 = saber1-1
-    var rod1 = saberD-10
-    var rod2 = saberD-9
-    var boomerang1 = saberD-8
-    var boomerang2 = saberD-7
+    var saber1 = parseInt(base)+parseInt(len3) //<-----------------------------------------------------| Saber 1 Address
+    var saber2 = saber1+1 //<--------------------------------------------------------------------------| Saber 2 Address
+    var saberD = saber1+12 //<-------------------------------------------------------------------------| Saber Dashing
+    var saberJ = saber1+13 //<-------------------------------------------------------------------------| Saber Jumping
+    var buster1 = saber1-2 //<-------------------------------------------------------------------------| Buster 1 Address
+    var buster2 = saber1-1 //<-------------------------------------------------------------------------| Buster 2 Address
+    var rod1 = saberD-10 //<---------------------------------------------------------------------------| Rod 1 Address
+    var rod2 = saberD-9 //<----------------------------------------------------------------------------| Rod 2 Address
+    var boomerang1 = saberD-8 //<----------------------------------------------------------------------| Boomerang 1 Address
+    var boomerang2 = saberD-7 //<----------------------------------------------------------------------| Boomerang 2 Address
  
     var addresses = {
         'base'          : base,

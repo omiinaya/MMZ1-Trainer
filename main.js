@@ -307,7 +307,6 @@ function MaxWeapons(on) {
     rod2 = memoryjs.readMemory(processObject.handle,       addresses.rod2,       memoryjs.INT);
     boomerang1 = memoryjs.readMemory(processObject.handle, addresses.boomerang1, memoryjs.INT);
     boomerang2 = memoryjs.readMemory(processObject.handle, addresses.boomerang2, memoryjs.INT);
-    //
     memoryjs.writeMemory(processObject.handle, addresses.saber1,        0x0F, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.saber2,        0x27, memoryjs.BYTE);
     memoryjs.writeMemory(processObject.handle, addresses.saberD,        0x64, memoryjs.BYTE);
@@ -330,14 +329,4 @@ function MaxWeapons(on) {
     memoryjs.writeMemory(processObject.handle, addresses.boomerang1, boomerang1, memoryjs.INT);
     memoryjs.writeMemory(processObject.handle, addresses.boomerang2, boomerang2, memoryjs.INT);
   }
-}
-
-function NoPushBack() {
-  var address1 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.nopushback, memoryjs.NORMAL, 47, 0)
-  memoryjs.writeMemory(processObject.handle, address1, 0x90, memoryjs.BYTE);
-  memoryjs.writeMemory(processObject.handle, address1 + 1, 0x90, memoryjs.BYTE);
-  memoryjs.writeMemory(processObject.handle, address1 + 2, 0x90, memoryjs.BYTE);
-  memoryjs.writeMemory(processObject.handle, address1 + 3, 0x90, memoryjs.BYTE);
-  memoryjs.writeMemory(processObject.handle, address1 + 4, 0x90, memoryjs.BYTE);
-  memoryjs.writeMemory(processObject.handle, address1 + 5, 0x90, memoryjs.BYTE);
 }
