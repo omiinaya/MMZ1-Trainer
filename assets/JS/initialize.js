@@ -1,6 +1,6 @@
 const signatures = require('./signatures');
 const memoryjs = require('memoryjs');
-const { maxsaber1 } = require('./signatures');
+const { maxsaber1, elements } = require('./signatures');
 
 function init(processObject) {
     //BASE
@@ -83,7 +83,7 @@ function init(processObject) {
     var codename4 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.codename3, memoryjs.NORMAL, 11, 0)
 
     //UNLOCK WEAPONS
-    var address8 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.weapons, memoryjs.NORMAL, 3, 0)
+    var address8 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.unlockweapons, memoryjs.NORMAL, 3, 0)
     var bytes5 = {
         1: memoryjs.readMemory(processObject.handle, address8,   memoryjs.BYTE).toString(16),
         2: memoryjs.readMemory(processObject.handle, address8+1, memoryjs.BYTE).toString(16)
@@ -92,7 +92,7 @@ function init(processObject) {
     var weapons = parseInt(base)+parseInt(len2) //<----------------------------------------------------| Weapons Unlocked Adddress
 
     //MAX WEAPONS
-    var address9 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.maxsaber1, memoryjs.NORMAL, 12, 0)
+    var address9 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.maxweapons, memoryjs.NORMAL, 12, 0)
     var bytes6 = {
         1: memoryjs.readMemory(processObject.handle, address9,   memoryjs.BYTE).toString(16),
         2: memoryjs.readMemory(processObject.handle, address9+1, memoryjs.BYTE).toString(16)
@@ -108,6 +108,15 @@ function init(processObject) {
     var rod2 = saberD-9 //<----------------------------------------------------------------------------| Rod 2 Address
     var boomerang1 = saberD-8 //<----------------------------------------------------------------------| Boomerang 1 Address
     var boomerang2 = saberD-7 //<----------------------------------------------------------------------| Boomerang 2 Address
+
+    //UNLOCK ELEMENTS
+    var address10 = memoryjs.findPattern(processObject.handle, processObject.szExeFile, signatures.elements, memoryjs.NORMAL, 4, 0)
+    var bytes7 = {
+        1: memoryjs.readMemory(processObject.handle, address10,     memoryjs.BYTE).toString(16),
+        2: memoryjs.readMemory(processObject.handle, address10+1,   memoryjs.BYTE).toString(16)
+    }
+    var len4 = '0x'+(bytes7[2]+bytes7[1]).padStart(8, '0')
+    var elements = parseInt(base)+parseInt(len4) //<---------------------------------------------------| Elements Address
  
     var addresses = {
         'base'          : base,
@@ -137,6 +146,7 @@ function init(processObject) {
         'rod2'          : rod2,
         'boomerang1'    : boomerang1,
         'boomerang2'    : boomerang2,
+        'elements'      : elements,
     }
     var readable = {
         'base'          : base.toString(16).toUpperCase(),
@@ -165,7 +175,8 @@ function init(processObject) {
         'rod1'          : rod1.toString(16).toUpperCase(),
         'rod2'          : rod2.toString(16).toUpperCase(),
         'boomerang1'    : boomerang1.toString(16).toUpperCase(),
-        'boomerang2'    : boomerang2.toString(16).toUpperCase()
+        'boomerang2'    : boomerang2.toString(16).toUpperCase(),
+        'elements'      : elements.toString(16).toUpperCase()
     }
     console.log(readable)
     return addresses
