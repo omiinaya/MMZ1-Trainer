@@ -102,6 +102,12 @@ function init(processObject) {
     var saber2 = saber1+1
     var saberD = saber1+12
     var saberJ = saber1+13
+    var buster1 = saber1-2
+    var buster2 = saber1-1
+    var rod1 = saberD-10
+    var rod2 = saberD-9
+    var boomerang1 = saberD-8
+    var boomerang2 = saberD-7
  
     var addresses = {
         'base'          : base,
@@ -125,6 +131,12 @@ function init(processObject) {
         'saber2'        : saber2,
         'saberD'        : saberD,
         'saberJ'        : saberJ,
+        'buster1'       : buster1,
+        'buster2'       : buster2,
+        'rod1'          : rod1,
+        'rod2'          : rod2,
+        'boomerang1'    : boomerang1,
+        'boomerang2'    : boomerang2,
     }
     var readable = {
         'base'          : base.toString(16).toUpperCase(),
@@ -147,7 +159,13 @@ function init(processObject) {
         'saber1'        : saber1.toString(16).toUpperCase(),
         'saber2'        : saber2.toString(16).toUpperCase(),
         'saberD'        : saberD.toString(16).toUpperCase(),
-        'saberJ'        : saberJ.toString(16).toUpperCase()
+        'saberJ'        : saberJ.toString(16).toUpperCase(),
+        'buster1'       : buster1.toString(16).toUpperCase(),
+        'buster2'       : buster2.toString(16).toUpperCase(),
+        'rod1'          : rod1.toString(16).toUpperCase(),
+        'rod2'          : rod2.toString(16).toUpperCase(),
+        'boomerang1'    : boomerang1.toString(16).toUpperCase(),
+        'boomerang2'    : boomerang2.toString(16).toUpperCase()
     }
     console.log(readable)
     return addresses
