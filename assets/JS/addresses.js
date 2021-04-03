@@ -34,15 +34,22 @@ const Addresses = {
     mainCharge: 0x142520B72,
     subCharge: 0x142520B73,
     //unlocks
-    weapons: 0x142520BD8,
+    //weapons: 0x142520BD8,
     lifeUps: 0x142520BD3,
-    elements: 0x142520BD9,
+    //elements: 0x142520BD9,
     //misc
     hover: 0x142520A4C,
     reflect: 0x140371BDA,
     //decreacelives: 0x14032B592
     //codename: 0x14251022A
     //05 for immortal
+    gravityforce: 0x140407634,
+    jumpaction: 0x140407143, //instruction triggered when jumping
+    fallingstate: 0x142520a4c, //FFFFFDC0 jumping up, 00000500 falling down
+    fallingaction: 0x140407721, //instruction triggered when falling
+    
+    //fly hack would toggle off falling action while idle, then either fall state up or down when holding a key
+
 }
 
 //140371D31 - address of flinch on player hit
