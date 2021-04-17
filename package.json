@@ -19,7 +19,8 @@
   "devDependencies": {
     "electron": "^11.3.0",
     "electron-packager": "^15.2.0",
-    "electron-rebuild": "^2.3.4"
+    "electron-rebuild": "^2.3.4",
+    "electron-builder": "^22.10.5"
   },
   "dependencies": {
     "electron-overlay-window": "^1.0.4",
