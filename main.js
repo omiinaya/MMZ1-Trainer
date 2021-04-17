@@ -337,83 +337,51 @@ function MaxWeapons(on) {
 }
 
 function logInput() {
-  var flying = false;
   var cooldown = false;
 
-  original1 = memoryjs.readMemory(processObject.handle, 0x140407721, memoryjs.BYTE);
-  original2 = memoryjs.readMemory(processObject.handle, 0x140407722, memoryjs.BYTE);
-  original3 = memoryjs.readMemory(processObject.handle, 0x140407723, memoryjs.BYTE);
-  original4 = memoryjs.readMemory(processObject.handle, 0x140407724, memoryjs.BYTE);
-  original5 = memoryjs.readMemory(processObject.handle, 0x140407725, memoryjs.BYTE);
-  original6 = memoryjs.readMemory(processObject.handle, 0x140407726, memoryjs.BYTE);
-  //
-  original7 = memoryjs.readMemory(processObject.handle, 0x140407634, memoryjs.BYTE);
-  original8 = memoryjs.readMemory(processObject.handle, 0x140407635, memoryjs.BYTE);
-  original9 = memoryjs.readMemory(processObject.handle, 0x140407636, memoryjs.BYTE);
-  original10 = memoryjs.readMemory(processObject.handle, 0x140407637, memoryjs.BYTE);
-  original11 = memoryjs.readMemory(processObject.handle, 0x140407638, memoryjs.BYTE);
-  original12 = memoryjs.readMemory(processObject.handle, 0x140407639, memoryjs.BYTE);
+  original1 = memoryjs.readMemory(processObject.handle, 0x1404076C7, memoryjs.BYTE);
+  original2 = memoryjs.readMemory(processObject.handle, 0x1404076C8, memoryjs.BYTE);
 
   ioHook.on('keydown', event => {
-    if (event.rawcode == 164 && flying == false && cooldown == false) {
-        console.log("hovering")
-        flying = true
-        memoryjs.writeMemory(processObject.handle, 0x140407721, 0x90, memoryjs.BYTE);
-        memoryjs.writeMemory(processObject.handle, 0x140407722, 0x90, memoryjs.BYTE);
-        memoryjs.writeMemory(processObject.handle, 0x140407723, 0x90, memoryjs.BYTE);
-        memoryjs.writeMemory(processObject.handle, 0x140407724, 0x90, memoryjs.BYTE);
-        memoryjs.writeMemory(processObject.handle, 0x140407725, 0x90, memoryjs.BYTE);
-        memoryjs.writeMemory(processObject.handle, 0x140407726, 0x90, memoryjs.BYTE);
-        //
-        memoryjs.writeMemory(processObject.handle, 0x140407634, 0x90, memoryjs.BYTE);
-        memoryjs.writeMemory(processObject.handle, 0x140407635, 0x90, memoryjs.BYTE);
-        memoryjs.writeMemory(processObject.handle, 0x140407636, 0x90, memoryjs.BYTE);
-        memoryjs.writeMemory(processObject.handle, 0x140407637, 0x90, memoryjs.BYTE);
-        memoryjs.writeMemory(processObject.handle, 0x140407638, 0x90, memoryjs.BYTE);
-        memoryjs.writeMemory(processObject.handle, 0x140407639, 0x90, memoryjs.BYTE);
-
-        cooldown = true;
-        console.log(cooldown)
-      }
+    if (event.rawcode == 164 && cooldown == false) {
+      console.log("hovering")
+      
+      //
+      memoryjs.writeMemory(processObject.handle, 0x1404076C7, 0x90, memoryjs.BYTE);
+      memoryjs.writeMemory(processObject.handle, 0x1404076C8, 0x90, memoryjs.BYTE);
+      //
+      cooldown = true;
+      console.log(cooldown)
+    }
     //up
     else if (event.rawcode == 38 && event.altKey == true) {
 
-        hotkeyT = setTimeout(function () {
-          console.log("flying up")
+      hotkeyT = setTimeout(function () {
+        console.log("flying up")
 
-        }, 100);
-      }
-      //down
-      else if (event.rawcode == 40 && event.altKey == true) {
-        hotkeyT = setTimeout(function () {
-          console.log("falling down")
-        }, 100);
-      }
-    })
+      }, 100);
+    }
+    //down
+    else if (event.rawcode == 40 && event.altKey == true) {
+      hotkeyT = setTimeout(function () {
+        console.log("falling down")
+      }, 100);
+    }
+  })
 
   ioHook.on('keyup', event => {
     //alt
-    if (event.rawcode == 164 && flying == true && cooldown == true) {
+    if (event.rawcode == 164 && cooldown == true) {
       //clearTimeout(hotkeyT)
       console.log('done')
-      flying = false;
-      memoryjs.writeMemory(processObject.handle, 0x140407721, original1, memoryjs.BYTE);
-      memoryjs.writeMemory(processObject.handle, 0x140407722, original2, memoryjs.BYTE);
-      memoryjs.writeMemory(processObject.handle, 0x140407723, original3, memoryjs.BYTE);
-      memoryjs.writeMemory(processObject.handle, 0x140407724, original4, memoryjs.BYTE);
-      memoryjs.writeMemory(processObject.handle, 0x140407725, original5, memoryjs.BYTE);
-      memoryjs.writeMemory(processObject.handle, 0x140407726, original6, memoryjs.BYTE);
+      
+      memoryjs.writeMemory(processObject.handle, 0x1404076C7, original1, memoryjs.BYTE);
+      memoryjs.writeMemory(processObject.handle, 0x1404076C8, original2, memoryjs.BYTE);
 
-      memoryjs.writeMemory(processObject.handle, 0x140407634, original7, memoryjs.BYTE);
-      memoryjs.writeMemory(processObject.handle, 0x140407635, original8, memoryjs.BYTE);
-      memoryjs.writeMemory(processObject.handle, 0x140407636, original9, memoryjs.BYTE);
-      memoryjs.writeMemory(processObject.handle, 0x140407637, original10, memoryjs.BYTE);
-      memoryjs.writeMemory(processObject.handle, 0x140407638, original11, memoryjs.BYTE);
-      memoryjs.writeMemory(processObject.handle, 0x140407639, original12, memoryjs.BYTE);
       hotkeyT = setTimeout(function () {
         cooldown = false
         console.log(cooldown)
-      }, 500);
+      }, 300);
     }
     //up
     else if (event.rawcode == 38 && event.altKey == true) {

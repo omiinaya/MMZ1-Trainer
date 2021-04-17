@@ -46,13 +46,13 @@ const Addresses = {
     infiniteclimb: 0x1404079AC,
     gravity: 0x140407634,
     jumpaction: 0x140407143, //instruction triggered when jumping
-    jumpingstate: 0x142520a4c, //FFFFFDC0 jumping up, 00000500 falling down FFFFFC00
+    jumpingstate: 0x142520a4c, //FFFFFDC0 jumping up, 00000500 falling down FFFFFC00,
+    superjump: 0x1404071C4,
     
     fallingaction: 0x140407721, //instruction triggered when falling
     //fly hack would toggle off falling action while idle, then either jump state up or down when holding a key
     bluemob: 0x14254DEB8,
     entitylist: 0x14254DE88
-
 }
 
 //140371D31 - address of flinch on player hit
