@@ -1,5 +1,14 @@
 # MMZ1 Trainer built with Electron and MemoryJS
 
+## Purpose
+
+This trainer was made for learning purposes only.
+
+I used this project to learn the basics of memory manipulation and introduce myself to concepts necessary for reverse-engineering.
+
+The code is probably trash and I will not be updating it if/when it breaks.
+
+
 ## How To Use
 
 1. Launch Mega Man Zero/ZX Legacy Collection.
@@ -10,13 +19,6 @@
 6. Click the toggles to enable or disable a feature.
 7. Enjoy!
 
-## Purpose
-
-This trainer was made for learning purposes only.
-
-The code is probably trash and I will not be updating it if/when it breaks.
-
-I used this project to learn the basics of memory manipulation and introduce myself to concepts necessary for reverse-engineering.
 
 ## Notes
 
