@@ -92,7 +92,7 @@ function getWindowTitle() {
 
 app.on('ready', () => {
   main()
-  logInput()
+  //hotkeyListener()
 })
 
 ipc.on('Enable', function (event, arg) {
@@ -336,19 +336,35 @@ function MaxWeapons(on) {
   }
 }
 
-function logInput() {
+/*
+function hotkeyListener() {
   var cooldown = false;
 
   original1 = memoryjs.readMemory(processObject.handle, 0x1404076C7, memoryjs.BYTE);
   original2 = memoryjs.readMemory(processObject.handle, 0x1404076C8, memoryjs.BYTE);
+  //
+  original3 = memoryjs.readMemory(processObject.handle, 0x14040762C, memoryjs.BYTE);
+  original4 = memoryjs.readMemory(processObject.handle, 0x14040762D, memoryjs.BYTE);
+  original5 = memoryjs.readMemory(processObject.handle, 0x14040762E, memoryjs.BYTE);
+  original6 = memoryjs.readMemory(processObject.handle, 0x14040762F, memoryjs.BYTE);
+  original7 = memoryjs.readMemory(processObject.handle, 0x140407630, memoryjs.BYTE);
+  original8 = memoryjs.readMemory(processObject.handle, 0x140407631, memoryjs.BYTE);
 
   ioHook.on('keydown', event => {
     if (event.rawcode == 164 && cooldown == false) {
       console.log("hovering")
-      
       //
       memoryjs.writeMemory(processObject.handle, 0x1404076C7, 0x90, memoryjs.BYTE);
       memoryjs.writeMemory(processObject.handle, 0x1404076C8, 0x90, memoryjs.BYTE);
+      
+      memoryjs.writeMemory(processObject.handle, 0x14040762C, 0xBF, memoryjs.BYTE);
+      memoryjs.writeMemory(processObject.handle, 0x14040762D, 0x00, memoryjs.BYTE);
+      memoryjs.writeMemory(processObject.handle, 0x14040762E, 0x00, memoryjs.BYTE);
+      memoryjs.writeMemory(processObject.handle, 0x14040762F, 0x00, memoryjs.BYTE);
+      memoryjs.writeMemory(processObject.handle, 0x140407630, 0x00, memoryjs.BYTE);
+      memoryjs.writeMemory(processObject.handle, 0x140407631, 0x90, memoryjs.BYTE);
+      
+      console.log(original3.toString(16))
       //
       cooldown = true;
       console.log(cooldown)
@@ -377,7 +393,14 @@ function logInput() {
       
       memoryjs.writeMemory(processObject.handle, 0x1404076C7, original1, memoryjs.BYTE);
       memoryjs.writeMemory(processObject.handle, 0x1404076C8, original2, memoryjs.BYTE);
-
+      
+      memoryjs.writeMemory(processObject.handle, 0x14040762C, original3, memoryjs.BYTE);
+      memoryjs.writeMemory(processObject.handle, 0x14040762D, original4, memoryjs.BYTE);
+      memoryjs.writeMemory(processObject.handle, 0x14040762E, original5, memoryjs.BYTE);
+      memoryjs.writeMemory(processObject.handle, 0x14040762F, original6, memoryjs.BYTE);
+      memoryjs.writeMemory(processObject.handle, 0x140407630, original7, memoryjs.BYTE);
+      memoryjs.writeMemory(processObject.handle, 0x140407631, original8, memoryjs.BYTE);
+      
       hotkeyT = setTimeout(function () {
         cooldown = false
         console.log(cooldown)
@@ -396,3 +419,4 @@ function logInput() {
   })
   ioHook.start();
 }
+*/
