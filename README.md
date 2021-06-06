@@ -11,10 +11,10 @@
 1. Launch Mega Man Zero/ZX Legacy Collection.
 2. Load Megaman Zero 1.
 3. Load your save file and spawn into the world.
-4. Run 'Starter.exe'.
+4. Run 'Starter.exe' and tab back into the game.
 5. Press insert to open/close the menu.
 6. Click the toggles to enable or disable a feature.
-7. Enjoy!
+7. Enjoy cheating at a game beatable by most average 8 year olds.
 
 
 ## Notes
