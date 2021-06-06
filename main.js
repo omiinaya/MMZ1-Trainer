@@ -7,7 +7,6 @@ const ioHook = require('iohook')
 const ipc = require('electron').ipcMain
 
 //modules
-const signatures = require('./assets/JS/signatures');
 const init = require('./assets/JS/initialize.js');
 
 //target
@@ -20,7 +19,8 @@ var processObject;
 
 //timers
 var waitingT;
-var hotkeyT;
+var closeT;
+//var hotkeyT;
 
 function createWindow(title) {
   const window = new BrowserWindow({
@@ -63,12 +63,36 @@ function windowToggle() {
 }
 
 function main() {
+  //wait for game to start
   getGameWindow()
   if (processObject) {
     clearTimeout(waitingT)
     getWindowTitle()
+    onGameClose()
   } else {
-    waitingT = setTimeout(main, 1000);
+    app.quit()
+    throw new Error('You must open the game first and load into your MMZ1 save file.');
+    //waitingT = setTimeout(main, 1000);
+  }
+}
+
+function onGameClose() {
+  var count = 0;
+  var processes = memoryjs.getProcesses();
+  processes.forEach(process => {
+    if (process.szExeFile == target) {
+      count++;
+      console.log('found process.')
+      closeT = setTimeout(onGameClose, 5000)
+    } else {
+      return
+    }
+  })
+  console.log(count);
+  if (count == 0) {
+    clearTimeout(closeT)
+    console.log('terminating trainer.')
+    app.quit()
   }
 }
 
@@ -356,14 +380,14 @@ function hotkeyListener() {
       //
       memoryjs.writeMemory(processObject.handle, 0x1404076C7, 0x90, memoryjs.BYTE);
       memoryjs.writeMemory(processObject.handle, 0x1404076C8, 0x90, memoryjs.BYTE);
-      
+
       memoryjs.writeMemory(processObject.handle, 0x14040762C, 0xBF, memoryjs.BYTE);
       memoryjs.writeMemory(processObject.handle, 0x14040762D, 0x00, memoryjs.BYTE);
       memoryjs.writeMemory(processObject.handle, 0x14040762E, 0x00, memoryjs.BYTE);
       memoryjs.writeMemory(processObject.handle, 0x14040762F, 0x00, memoryjs.BYTE);
       memoryjs.writeMemory(processObject.handle, 0x140407630, 0x00, memoryjs.BYTE);
       memoryjs.writeMemory(processObject.handle, 0x140407631, 0x90, memoryjs.BYTE);
-      
+
       console.log(original3.toString(16))
       //
       cooldown = true;
@@ -390,17 +414,17 @@ function hotkeyListener() {
     if (event.rawcode == 164 && cooldown == true) {
       //clearTimeout(hotkeyT)
       console.log('done')
-      
+
       memoryjs.writeMemory(processObject.handle, 0x1404076C7, original1, memoryjs.BYTE);
       memoryjs.writeMemory(processObject.handle, 0x1404076C8, original2, memoryjs.BYTE);
-      
+
       memoryjs.writeMemory(processObject.handle, 0x14040762C, original3, memoryjs.BYTE);
       memoryjs.writeMemory(processObject.handle, 0x14040762D, original4, memoryjs.BYTE);
       memoryjs.writeMemory(processObject.handle, 0x14040762E, original5, memoryjs.BYTE);
       memoryjs.writeMemory(processObject.handle, 0x14040762F, original6, memoryjs.BYTE);
       memoryjs.writeMemory(processObject.handle, 0x140407630, original7, memoryjs.BYTE);
       memoryjs.writeMemory(processObject.handle, 0x140407631, original8, memoryjs.BYTE);
-      
+
       hotkeyT = setTimeout(function () {
         cooldown = false
         console.log(cooldown)

@@ -1,6 +1,5 @@
 const signatures = require('./signatures');
 const memoryjs = require('memoryjs');
-const { maxsaber1, elements } = require('./signatures');
 
 function init(processObject) {
     //BASE
