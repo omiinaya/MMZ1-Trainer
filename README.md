@@ -20,3 +20,4 @@ I used this project to learn the basics of memory manipulation and introduce mys
 
 You need to be loaded into your MMZ1 Save file BEFORE you open the trainer.
 You may need to take damage first before enabling God Mode for it to work.
+You will need to finish a level before immortal codename is applied.
