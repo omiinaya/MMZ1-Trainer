@@ -2,11 +2,9 @@
 
 ## Purpose
 
-This trainer was made for learning purposes only.
-
-I used this project to learn the basics of memory manipulation and introduce myself to concepts necessary for reverse-engineering.
-
-The code is probably trash and I will not be updating it if/when it breaks.
+* This trainer was made for learning purposes only.
+* I used this project to learn the basics of memory manipulation and introduce myself to concepts necessary for reverse-engineering.
+* The code is probably trash and I will not be updating it if/when it breaks.
 
 
 ## How To Use
